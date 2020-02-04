@@ -22,9 +22,15 @@ router.get('/new', function(req, res, nex){
 			console.log(err.fatal); 
 		} else {
 			console.log('database succesfully connected'); 
+
 		}
 	}); 
+	//testing to see if my db is actually working
 	res.render('newbug'); 
+	connection.query("SELECT * FROM bug", function(err, result){
+		if(err) throw err; 
+		console.log("result: "+ result[0]); 
+	}); 
 }); 
 
 router.get('/edit', function(req, res, nex){
