@@ -8,6 +8,8 @@ router.get('/', function(req, res, next) {
 	if(err) throw err; 
 	console.log("result: "+ result[0]); 
 }); 
+
+
 res.send('respond with a resource');
 });
 
