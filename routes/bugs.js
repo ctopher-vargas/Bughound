@@ -9,17 +9,15 @@ router.get('/', function(req, res, next) {
  
 });
 
-router.get('/new', function(req, res, nex){
+router.get('/', function(req, res, nex){
 	
 	//testing to see if my db is actually working
 	 
 	connection.query("SELECT * FROM people;", function(err, result){
-		if(err) throw err; 
-		console.log("result: "+ result[0]); 
-		res.status(200).json({
-			message: "good",
-			people: result
-		});
+		if(err) {throw err;}
+		else{
+			res.render('users', {users: result});
+		}
 	}); 
 }); 
 

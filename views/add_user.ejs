@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Users</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Add User</h1>
+    <form name="form1" method="POST" action="/users/add">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="name" ></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td><input type="text" name="username" ></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="text" name="password" ></td>
+        </tr>
+        <tr>
+            <td>User Level</td>
+            <td><input type="text" name="userlevel" ></td>
+        </tr>
+        <tr>
+        <td colspan="2"><input type="submit" value="Save" ></td>
+        </tr>
+    </table>
+    </form>   
+</body>
+</html>
