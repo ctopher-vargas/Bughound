@@ -2,16 +2,35 @@
 <html>
   <head>
     <title>Users</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </head>
   <body>
-    <h1>Users</h1>
-    <div>
-        <ul>
+    <div class="container">
+      <h3>Users</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>User Level</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
             <% users.forEach(function(user) { %>
-                <li>Name: <%= user.name %> Username: <%=user.username%> User Level: <%=user.userlevel%></li>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%=user.username%></td>
+                <td><%=user.userlevel%></td>
+                <td><button type="" class="btn btn-primary">Update</button></td>
+                <td><button type="" class="btn btn-primary">Delete</button></td>
+              </tr>
             <% }); %>
-        </ul>
+          </tbody>
+        </table>
+        
     </div>
   </body>
 </html>
