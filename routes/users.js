@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 	}); 
 }); 
 
-router.get('/user', function(req, res, next) {
+router.get('/employee', function(req, res, next) {
   
 	connection.query("SELECT * FROM employees WHERE username = ?;", req.query.username,function(err, result){
 		if(err) {throw err;}
