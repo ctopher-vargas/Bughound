@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Users</title>
+    <% include ./head %>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Users</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>User Level</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(function(user) { %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%=user.username%></td>
+                <td><%=user.userlevel%></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        
+    </div>
+  </body>
+</html>
