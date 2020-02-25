@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <% include ./head %>
+</head>
+
+<body>
+
+    <div class="container">
+        <h3>Areas</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Area ID</th>
+                    <th>Program ID</th>
+                    <th>Area</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% areas.forEach(function(area) { %>
+                <tr>
+                    <form id="updateArea" value="<%=id %>" name="updateArea" method="PUT" action="/areas/area/<%=area.area_id %>">
+
+                        <td><%=area.area_id %></td>
+                        <td><%=id %></td>
+                        <td><input type="text" value="<%=area.area %>" name="updateAreaTxt" class="form-control" id="updateAreaTxt"></td>
+                        <td><button type="submit" class="btn btn-primary">Update</button></td>
+
+                    </form>
+                </tr>
+                <% }); %>
+                <tr>
+                    <form id="addArea" value="<%=id %>" method="POST" action="/areas/<%=id %>">
+                        <td>Area</td>
+                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId" class="form-control" id="hiddenProgId"></td>
+                        <td><input type="text" name="area" class="form-control" id="area"></td>
+                        <td><button type="submit" class="btn btn-primary">Add area</button></td>
+                    </form>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <script type="text/javascript">
+        $("#updateArea").submit(function (event) {
+            event.preventDefault(); //prevent default action 
+            var post_url = $(this).attr("action"); //get form action url
+            var request_method = $(this).attr("method"); //get form GET/POST method
+            var form_data = $(this).serialize(); //Encode form elements for submission
+            var id = $('#hiddenProgId').val();
+            $.ajax({
+                url: post_url,
+                type: request_method,
+                data: form_data
+            }).done(function (response) { 
+                window.location.href = '/areas/' + id;
+            }).fail(function(response){
+                console.log(response);
+            });
+        });
+
+        $("#addArea").submit(function (event) {
+            event.preventDefault(); //prevent default action 
+            var post_url = $(this).attr("action"); //get form action url
+            var request_method = $(this).attr("method"); //get form GET/POST method
+            
+            var form_data = $(this).serialize(); //Encode form elements for submission
+            //console.log(form_data);
+            $.ajax({
+                url: post_url,
+                type: request_method,
+                data: form_data
+            }).done(function (response) { 
+                //window.location.href = '/areas/' + id;
+            }).fail(function(response){
+                console.log(response);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

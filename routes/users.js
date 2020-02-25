@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.put('/:emp_id', function(req, res, next){
-	console.log("from put");
+
 
 	var sql = "UPDATE employees SET name = ?, username = ?, password = ?, userlevel = ? WHERE emp_id = ?;";
 
@@ -39,18 +39,6 @@ router.delete('/', function(req, res, next){
 	}); 
 
 });
- 
-
-router.get('/employee', function(req, res, next) {
-  
-	connection.query("SELECT * FROM employees WHERE username = ?;", req.query.username,function(err, result){
-		if(err) {throw err;}
-		else{
-			console.log(result);
-			res.render('user', {users: result});
-		}
-	}); 
-}); 
 
 router.get('/add', function(req, res, next){
 
@@ -100,5 +88,18 @@ router.post('/update/:emp_id', function(req, res, next){
 router.get('/search', function(req, res, next){
 	res.render('search');
 });
+
+ 
+
+router.get('/employee', function(req, res, next) {
+  
+	connection.query("SELECT * FROM employees WHERE username = ?;", req.query.username,function(err, result){
+		if(err) {throw err;}
+		else{
+			console.log(result);
+			res.render('user', {users: result});
+		}
+	}); 
+}); 
 
 module.exports = router;
