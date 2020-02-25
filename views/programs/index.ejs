@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bughound</title>
+    <% include ../partials/head %>
+ </head>
+  <body>
+    <div class="container">
+      <h3>Programs</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Program Name</th>
+              <th>Release</th>
+              <th>Version</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% programs.forEach(function(programs) { %>
+              <tr>
+                <td><%=programs.prog_id%></td>
+                <td><%=programs.program%></td>
+                <td><%=programs.program_release%></td>
+                <td><%=programs.program_version%></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <div class="container">
+        	<a class="btn btn-success" href="programs/new" role="button">Add Program</a>
+        	<a class="btn btn-primary" href="programs/edit" role="button">Edit Program</a>
+        	<a class="btn btn-danger" href="programs/delete" role="button">Delete Program</a>
+        </div>
+    </div>
+  </body>
+</html>
