@@ -11,11 +11,11 @@ router.get('/', function(req, res, next) {
 		}
 	}); 
 });
-
+//add new program
 router.get('/new', function(req, res, next){
 	res.render('programs/new'); 
 }); 
-
+//post route for adding new program
 router.post('/', function(req, res, nex){
 	var sql = 'INSERT INTO programs(program, program_release, program_version) VALUES(?, ?, ?)';
 
@@ -27,11 +27,11 @@ router.post('/', function(req, res, nex){
 		}
 	 }); 
 }); 
-
+//search for a specific program
 router.get('/search', function(req, res, next){
 	res.render('programs/search'); 
 }); 
-
+//search results
 router.get('/edit', function(req, res, next){
 	console.log(req.query.program); 
 	connection.query('SELECT * FROM programs WHERE program = ? ;', req.query.program, function(err, results){
@@ -46,7 +46,7 @@ router.get('/edit', function(req, res, next){
 router.get('/edit', function(req, res, next){
 	res.render('programs/edit');
 }); 
-//edit
+//edit a specific program
 router.get('/edit/:program_id', function(req, res, next){
 	connection.query('SELECT * FROM programs WHERE prog_id = ? ; ', req.params.program_id, function(err, results){
 		if(err) {throw err;}
@@ -57,7 +57,7 @@ router.get('/edit/:program_id', function(req, res, next){
 		}
 	}); 
 }); 
-//put route
+//put route for editing a program
 router.put('/:program_id', function(req, res, next){
 	console.log(req.body); 
 	var sql = 'UPDATE programs SET program = ?, program_release = ?, program_version = ? WHERE prog_id = ?'; 
@@ -69,12 +69,12 @@ router.put('/:program_id', function(req, res, next){
 		}
 	 }); 
 }); 
-
+//show delete page
 router.get('/delete', function(req, res, next){
 	res.render('programs/delete'); 
 });
 
-//destroy
+//destroy for deleting a specific program
 router.delete("/:program_id", function(req, res){
 	var sql = "DELETE FROM programs WHERE prog_id = ?;"
 	connection.query(sql, req.params.program_id, function(err, results){
