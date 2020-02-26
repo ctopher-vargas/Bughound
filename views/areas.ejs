@@ -24,7 +24,7 @@
                     <form id="updateArea" value="<%=id %>" name="updateArea" method="PUT" action="/areas/area/<%=area.area_id %>">
 
                         <td><%=area.area_id %></td>
-                        <td><%=id %></td>
+                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId2" class="form-control" id="hiddenProgId2"></td>
                         <td><input type="text" value="<%=area.area %>" name="updateAreaTxt" class="form-control" id="updateAreaTxt"></td>
                         <td><button type="submit" class="btn btn-primary">Update</button></td>
 
@@ -51,7 +51,7 @@
             var post_url = $(this).attr("action"); //get form action url
             var request_method = $(this).attr("method"); //get form GET/POST method
             var form_data = $(this).serialize(); //Encode form elements for submission
-            var id = $('#hiddenProgId').val();
+            var id = $("#hiddenProgId2").attr("value");
             $.ajax({
                 url: post_url,
                 type: request_method,
@@ -67,7 +67,7 @@
             event.preventDefault(); //prevent default action 
             var post_url = $(this).attr("action"); //get form action url
             var request_method = $(this).attr("method"); //get form GET/POST method
-            
+            var id = $("#hiddenProgId").attr("value");
             var form_data = $(this).serialize(); //Encode form elements for submission
             //console.log(form_data);
             $.ajax({
@@ -75,7 +75,7 @@
                 type: request_method,
                 data: form_data
             }).done(function (response) { 
-                //window.location.href = '/areas/' + id;
+                window.location.href = '/areas/' + id;
             }).fail(function(response){
                 console.log(response);
             });
