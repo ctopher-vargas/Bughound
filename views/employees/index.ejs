@@ -11,6 +11,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th>Id</th>
           <th>Name</th>
           <th>Username</th>
           <th>User Level</th>
@@ -19,15 +20,18 @@
         </tr>
       </thead>
       <tbody>
-        <% users.forEach(function(users) { %>
-          <tr>
-            <td><%=users.name %></td>
-            <td><%=users.username%></td>
-            <td><%=users.userlevel%></td>
-            <td><button onclick="showUpdateForm();" class="btn btn-primary">Update</button></td>
-            <td><button type="" id="<%= users.emp_id %>" onclick="deleteUser(this.id);"
-                class="btn btn-primary">Delete</button></td>
-          </tr>
+        <%var id = 0; %>
+        <% users.forEach(function(user, index) { %>
+        <tr>
+          
+          <td><%=user.emp_id %></td>
+          <td><%=user.name %></td>
+          <td><%=user.username%></td>
+          <td><%=user.userlevel%></td>
+          <td><button id="<%=index%>" onclick="showUpdateForm('<%=user.emp_id %>','<%=user.name %>', '<%=user.username %>' ,'<%=user.password %>', '<%=user.userlevel %>');" class="btn btn-primary">Update</button></td>
+          <td><button type="" id="<%= user.emp_id %>" onclick="deleteUser(this.id);"
+              class="btn btn-primary">Delete</button></td>
+        </tr>
         <% }); %>
       </tbody>
     </table>
@@ -35,35 +39,38 @@
   </div>
 
   <div id="update" class="container" style="visibility: hidden;">
-    <h3>Add User</h3>
-    <form id="updateForm" name="updateForm" method="PUT" action="/users/<%= users[0].emp_id %>">
+    <h3>Update User</h3>
+    <form id="updateForm" name="updateForm" method="PUT" action="/users">
 
-      <input type="hidden" name="emp_id" value="<%= users[0].emp_id %>" />
+      <input type="text" name="emp_id" value="" id="emp_id" />
       <div class="form-group row">
         <label for="name" class="col-sm-2 col-form-label">Name</label>
         <div class="col-sm-4">
-          <input type="text" value="<%= users[0].name %>" name="name" class="form-control" id="name">
+          <input type="text" value="" name="name" class="form-control" id="name"
+            required="required">
         </div>
       </div>
       <div class="form-group row">
         <label for="username" class="col-sm-2 col-form-label">Username</label>
         <div class="col-sm-4">
-          <input type="text" value="<%=users[0].username%>" name="username" class="form-control" id="username">
+          <input type="text" value="" name="username" class="form-control" id="username"
+            required="required">
         </div>
       </div>
       <div class="form-group row">
         <label for="password" class="col-sm-2 col-form-label">Password</label>
         <div class="col-sm-4">
-          <input type="text" name="password" value="<%=users[0].password%>" class="form-control" id="password">
+          <input type="text" name="password" value="" class="form-control" id="password"
+            required="required">
         </div>
       </div>
       <div class="form-group row">
         <label class="col-sm-2" for="userLevel">User Level</label>
         <div class="col-sm-4">
-          <select class="form-control" name="userLevel" id="userLevel">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
+          <select class="form-control" name="userLevel" id="userLevel" required="required">
+            <option id="option1">1</option>
+            <option id="option2">2</option>
+            <option id="option3">3</option>
           </select>
         </div>
       </div>
@@ -88,7 +95,7 @@
         contentType: 'application/json',
         url: 'http://localhost:3000/users',
         success: function (data) {
-          console.log('success');
+          window.location.href = '/users/';
         }
       });
     }
@@ -104,17 +111,37 @@
         type: request_method,
         data: form_data
       }).done(function (response) { //
-        console.log("success");
+        console.log(response);
+        window.location.href = '/users/';
+      }).fail(function (response) {
+        console.log(response);
       });
     });
 
   </script>
   <script>
 
-    function showUpdateForm() {
+    function showUpdateForm(emp_id, name, username, password, userlevel) {
+      
       document.getElementById("update").setAttribute("style", "visibility: visible");
+      document.getElementById("update").setAttribute("value", emp_id);
+      document.getElementById("emp_id").setAttribute("value", emp_id);
+      document.getElementById("name").setAttribute("value", name);
+      document.getElementById("username").setAttribute("value", username);
+      document.getElementById("userLevel").setAttribute("value", userlevel);
+      document.getElementById("password").setAttribute("value", password);
+
+      if(userlevel == "1"){
+        document.getElementById("option1").setAttribute("selected", "selected");
+      }else if (userlevel == "2"){
+        document.getElementById("option2").setAttribute("selected", "selected");
+      }else{
+        document.getElementById("option3").setAttribute("selected", "selected");
+      }
+
+      
     }
-  
+
   </script>
 </body>
 

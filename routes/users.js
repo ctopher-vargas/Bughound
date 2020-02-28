@@ -38,13 +38,14 @@ router.post('/update/:emp_id', function(req, res, next){
 	 });
 });
 //put route for updating users
-router.put('/:emp_id', function(req, res, next){
+router.put('/', function(req, res, next){
 	var sql = "UPDATE employees SET name = ?, username = ?, password = ?, userlevel = ? WHERE emp_id = ?;";
 	console.log(req.body);
-	connection.query(sql, [req.body.name, req.body.username, req.body.password, req.body.userLevel, req.params.emp_id], function(err, result){
+	console.log(req.get('referer') + 'in put');
+	connection.query(sql, [req.body.name, req.body.username, req.body.password, req.body.userLevel, req.body.emp_id], function(err, result){
 		if(err) {throw err;}
 		else{
-			console.log(result);
+			res.redirect(303, req.get('referer'));
 		}
 	});
 }); 
@@ -55,7 +56,7 @@ router.delete('/', function(req, res, next){
 	connection.query("DELETE FROM employees WHERE emp_id = ?;", req.body.emp_id,function(err, result){
 		if(err) {throw err;}
 		else{
-			console.log(result);
+			res.redirect(303, req.get('referer'));
 		}
 	}); 
 }); 

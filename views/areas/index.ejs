@@ -21,21 +21,27 @@
             <tbody>
                 <% areas.forEach(function(area) { %>
                 <tr>
-                    <form id="updateArea" value="<%=id %>" name="updateArea" method="PUT" action="/areas/area/<%=area.area_id %>">
+                    <form id="updateArea" value="<%=id %>" name="updateArea" method="POST"
+                        action="/areas/area/<%=area.area_id %>">
 
                         <td><%=area.area_id %></td>
-                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId2" class="form-control" id="hiddenProgId2"></td>
-                        <td><input type="text" value="<%=area.area %>" name="updateAreaTxt" class="form-control" id="updateAreaTxt"></td>
+                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId2" class="form-control"
+                                id="hiddenProgId2"></td>
+                        <td><input type="text" value="<%=area.area %>" name="updateAreaTxt" class="form-control"
+                                id="updateAreaTxt" required="required"></td>
                         <td><button type="submit" class="btn btn-primary">Update</button></td>
 
                     </form>
+                    <td><button type="" id="<%= area.area_id %>" onclick="deleteArea(this.id, '<%=id %>');"
+                            class="btn btn-primary">Delete</button></td>
                 </tr>
                 <% }); %>
                 <tr>
                     <form id="addArea" value="<%=id %>" method="POST" action="/areas/<%=id %>">
                         <td>Area</td>
-                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId" class="form-control" id="hiddenProgId"></td>
-                        <td><input type="text" name="area" class="form-control" id="area"></td>
+                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId" class="form-control"
+                                id="hiddenProgId"></td>
+                        <td><input type="text" name="area" class="form-control" id="area" required="required"></td>
                         <td><button type="submit" class="btn btn-primary">Add area</button></td>
                     </form>
                 </tr>
@@ -46,7 +52,23 @@
 
 
     <script type="text/javascript">
-        $("#updateArea").submit(function (event) {
+
+        function deleteArea(id, prog_id) {
+
+            var data = {};
+            data.area_id = id;
+
+            $.ajax({
+                type: 'DELETE',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: 'http://localhost:3000/areas',
+                success: function (data) {
+                    window.location.href = '/areas/' + prog_id;
+                }
+            });
+        }
+        /*$("#updateArea").submit(function (event) {
             event.preventDefault(); //prevent default action 
             var post_url = $(this).attr("action"); //get form action url
             var request_method = $(this).attr("method"); //get form GET/POST method
@@ -54,14 +76,14 @@
             var id = $("#hiddenProgId2").attr("value");
             $.ajax({
                 url: post_url,
-                type: request_method,
+                type: 'PUT',
                 data: form_data
-            }).done(function (response) { 
+            }).done(function (response) {
                 window.location.href = '/areas/' + id;
-            }).fail(function(response){
+            }).fail(function (response) {
                 console.log(response);
             });
-        });
+        }); */
 
         $("#addArea").submit(function (event) {
             event.preventDefault(); //prevent default action 
@@ -74,9 +96,9 @@
                 url: post_url,
                 type: request_method,
                 data: form_data
-            }).done(function (response) { 
+            }).done(function (response) {
                 window.location.href = '/areas/' + id;
-            }).fail(function(response){
+            }).fail(function (response) {
                 console.log(response);
             });
         });
