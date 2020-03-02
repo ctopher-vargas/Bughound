@@ -17,19 +17,24 @@
             </thead>
             <tbody>
                 <% areas.forEach(function(area) { %>
-                    <tr>
-                        <form id="updateArea" value="<%=id %>" name="updateArea" method="POST"
-                            action="/areas/area/<%=area.area_id %>">
-                            <td><%=area.area_id %></td>
-                            <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId2" class="form-control"
-                                    id="hiddenProgId2"></td>
-                            <td><input type="text" value="<%=area.area %>" name="updateAreaTxt" class="form-control"
-                                    id="updateAreaTxt" required="required"></td>
-                            <td><button type="submit" class="btn btn-primary">Update</button></td>
-                        </form>
-                        <td><button type="" id="<%= area.area_id %>" onclick="deleteArea(this.id, '<%=id %>');" class="btn btn-primary">Delete</button></td>
-                    </tr>
-                    <% }); %>
+
+                <tr>
+                    <form id="updateArea" value="<%=id %>" name="updateArea" method="POST"
+                        action="/areas/area/<%=area.area_id %>">
+
+                        <td><%=area.area_id %></td>
+                        <td><%=id %><input value="<%=id %>" type="hidden" name="hiddenProgId2" class="form-control"
+                                id="hiddenProgId2"></td>
+                        <td><input type="text" value="<%=area.area %>" name="updateAreaTxt" class="form-control"
+                                id="updateAreaTxt" required="required"></td>
+                        <td><button type="submit" class="btn btn-primary">Update</button></td>
+
+                    </form>
+                    <td><button type="" id="<%= area.area_id %>" onclick="deleteArea(this.id, '<%=id %>');"
+                            class="btn btn-primary">Delete</button></td>
+                </tr>
+                <% }); %>
+
                 <tr>
                     <form id="addArea" value="<%=id %>" method="POST" action="/areas/<%=id %>">
                         <td>Area</td>
@@ -43,6 +48,8 @@
         </table>
 
     </div>
+
+    <script type="text/javascript">
        <script type="text/javascript">
         function deleteArea(id, prog_id) {
             var data = {};
@@ -57,6 +64,7 @@
                 }
             });
         }
+
         $("#addArea").submit(function (event) {
             event.preventDefault(); //prevent default action 
             var post_url = $(this).attr("action"); //get form action url

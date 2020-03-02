@@ -34,7 +34,10 @@
 
   <div id="update" class="container" style="visibility: hidden;">
     <h3>Add User</h3>
-    <form id="updateForm" name="updateForm" method="PUT" action="/users/">
+
+    <form id="updateForm" name="updateForm" method="PUT" action="/users">
+
+
       <input type="hidden" name="emp_id" value="<%= users[0].emp_id %>" />
       <div class="form-group row">
         <label for="name" class="col-sm-2 col-form-label">Name</label>
@@ -110,6 +113,9 @@
     function showUpdateForm() {
      document.getElementById("update").setAttribute("style", "visibility: visible");
     }
+
+
   </script>
 </body>
+
 </html>

@@ -33,6 +33,7 @@ router.post('/:id', function(req, res, next){
 });
 //update area 
 router.post('/area/:id', function(req, res, next){
+
     console.log(req.body);
     var sql = "UPDATE areas SET area = ? WHERE area_id = ?;";
 	console.log(req.get('referer'));
@@ -45,13 +46,14 @@ router.post('/area/:id', function(req, res, next){
 });
 //update area 
 router.put('/area/:id', function(req, res, next){
+
     console.log(req.body);
     var sql = "UPDATE areas SET area = ? WHERE area_id = ?;";
 	console.log(req.get('referer'));
 	connection.query(sql, [req.body.updateAreaTxt, req.params.id], function(err, result){
 		if(err) {throw err;}
 		else{
-			res.redirect(req.get('referer'));
+			res.redirect(303, req.get('referer'));
 		}
 	 });
 });
@@ -65,5 +67,16 @@ router.delete('/', function(req, res, next){
 		}
 	}); 
 });
+
+//delete area
+router.delete('/', function(req, res, next){
+	console.log(req.body);
+	connection.query("DELETE FROM areas WHERE area_id = ?;", req.body.area_id,function(err, result){
+		if(err) {throw err;}
+		else{
+			res.redirect(303, req.get('referer'));
+		}
+	}); 
+}); 
 
 module.exports = router;

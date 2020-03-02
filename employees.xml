@@ -1,6 +1,19 @@
 <?xml version='1.0'?>
 <employees>
     <employee>
+
+        <emp_id>1010</emp_id>
+        <name>alex22</name>
+        <username>alex</username>
+        <password>alex</password>
+        <userlevel>1</userlevel>
+    </employee>
+    <employee>
+        <emp_id>1011</emp_id>
+        <name>chris</name>
+        <username>chris</username>
+        <password>chris</password>
+
         <emp_id>1003</emp_id>
         <name>alex </name>
         <username>ax</username>
@@ -19,6 +32,7 @@
         <name>Micheal Hoffman</name>
         <username>hoffman</username>
         <password>123123</password>
+
         <userlevel>1</userlevel>
     </employee>
 </employees>
