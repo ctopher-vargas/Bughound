@@ -59,14 +59,16 @@
         <div class="col-sm-4">
           <select class="form-control" name="userLevel" id="userLevel" required>
             <%
-                var options = [ 1, 2, 3 ];
-                for ( var i = 0; i < options.length; i++ ) {
+              var options = [ 1, 2, 3 ];
+              for ( var i = 0; i < options.length; i++ )
+              {
                   var selected = ( users[0].userlevel == options[i] ) ? "selected" : "";
+                  %><option value="<%=options[ i ] %>" <%=selected %>><%=options[i] %></option><%
+              }
               %>
-              <option value="<%=options[ i ] %>" <%=selected %>><%=options[i] %></option>
-              <% } %>
           </select>
         </div>
+      </div>
 
       </div>
       <div class="form-group row">

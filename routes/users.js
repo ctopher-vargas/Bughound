@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../db');
 var fs = require('fs');
-var parser = require('xml2json');
+var parser = require('js2xmlparser');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -52,15 +52,15 @@ router.put('/', function (req, res, next) {
 	});
 });
 //route for deleting user
-router.delete('/', function(req, res, next){
+router.delete('/', function (req, res, next) {
 	console.log(req.body);
-	connection.query("DELETE FROM employees WHERE emp_id = ?;", req.body.emp_id, function(err, result){
-		if(err) {throw err;}
-		else{
-			console.log(result);
+	connection.query("DELETE FROM employees WHERE emp_id = ?;", req.body.emp_id, function (err, result) {
+		if (err) { throw err; }
+		else {
+			res.redirect(303, req.get('referer'));
 		}
-	}); 
-}); 
+	});
+});
 //search for users route 
 router.get('/search', function(req, res, next){
 	res.render('employees/search');
@@ -80,11 +80,9 @@ router.get('/download', function (req, res, next) {
 	connection.query("SELECT * FROM employees;", function (err, result) {
 		if (err) { throw err; }
 		else {
-			var object = { employees: result };
-			var stringified = JSON.stringify(object);
-			console.log(stringified);
-			var xml = parser.toXml(stringified);
-			console.log(xml);
+            console.log(result);
+			var object = { employee: result };
+			var xml = parser.parse("employees", object);
 			fs.writeFile('employees.xml', xml, function (err, data) {
 				if (err) {
 					console.log(err);
@@ -98,6 +96,5 @@ router.get('/download', function (req, res, next) {
 		}
 	});
 });
-
 module.exports = router;
 

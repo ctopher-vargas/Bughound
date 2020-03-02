@@ -32,6 +32,18 @@ router.post('/:id', function(req, res, next){
 	});
 });
 //update area 
+router.post('/area/:id', function(req, res, next){
+    console.log(req.body);
+    var sql = "UPDATE areas SET area = ? WHERE area_id = ?;";
+	console.log(req.get('referer'));
+	connection.query(sql, [req.body.updateAreaTxt, req.params.id], function(err, result){
+		if(err) {throw err;}
+		else{
+			res.redirect(303, req.get('referer'));
+		}
+	 });
+});
+//update area 
 router.put('/area/:id', function(req, res, next){
     console.log(req.body);
     var sql = "UPDATE areas SET area = ? WHERE area_id = ?;";
