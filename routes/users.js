@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('../db');
+var fs = require('fs');
+var parser = require('xml2json');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -38,21 +40,21 @@ router.post('/update/:emp_id', function(req, res, next){
 	 });
 });
 //put route for updating users
-router.put('/:emp_id', function(req, res, next){
+router.put('/', function (req, res, next) {
 	var sql = "UPDATE employees SET name = ?, username = ?, password = ?, userlevel = ? WHERE emp_id = ?;";
 	console.log(req.body);
-	connection.query(sql, [req.body.name, req.body.username, req.body.password, req.body.userLevel, req.params.emp_id], function(err, result){
-		if(err) {throw err;}
-		else{
-			console.log(result);
+	console.log(req.get('referer') + 'in put');
+	connection.query(sql, [req.body.name, req.body.username, req.body.password, req.body.userLevel, req.body.emp_id], function (err, result) {
+		if (err) { throw err; }
+		else {
+			res.redirect(303, req.get('referer'));
 		}
 	});
-}); 
-
+});
 //route for deleting user
 router.delete('/', function(req, res, next){
 	console.log(req.body);
-	connection.query("DELETE FROM employees WHERE emp_id = ?;", req.body.emp_id,function(err, result){
+	connection.query("DELETE FROM employees WHERE emp_id = ?;", req.body.emp_id, function(err, result){
 		if(err) {throw err;}
 		else{
 			console.log(result);
@@ -65,7 +67,7 @@ router.get('/search', function(req, res, next){
 });
 //search results
 router.get('/employee', function(req, res, next) {
-	connection.query("SELECT * FROM employees WHERE username = ?;", req.query.username,function(err, result){
+	connection.query("SELECT * FROM employees WHERE username = ?;", req.query.username, function(err, result){
 		if(err) {throw err;}
 		else{
 			console.log(result);
@@ -73,6 +75,29 @@ router.get('/employee', function(req, res, next) {
 		}
 	}); 
 }); 
+//comment here 
+router.get('/download', function (req, res, next) {
+	connection.query("SELECT * FROM employees;", function (err, result) {
+		if (err) { throw err; }
+		else {
+			var object = { employees: result };
+			var stringified = JSON.stringify(object);
+			console.log(stringified);
+			var xml = parser.toXml(stringified);
+			console.log(xml);
+			fs.writeFile('employees.xml', xml, function (err, data) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.download('employees.xml', function(err, data){
+						console.log('downloaded?');
+					});
+				}
+			});
+		}
+	});
+});
 
 module.exports = router;
 
