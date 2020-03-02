@@ -6,6 +6,7 @@
 </head>
 
 <body>
+
   <div class="container">
     <h3>Users</h3>
     <table class="table">
@@ -19,7 +20,6 @@
         </tr>
       </thead>
       <tbody>
-
         <tr>
           <td><%=users[0].name %></td>
           <td><%=users[0].username%></td>
@@ -28,15 +28,15 @@
           <td><button type="" id="<%= users[0].emp_id %>" onclick="deleteUser(this.id);"
               class="btn btn-primary">Delete</button></td>
         </tr>
-
       </tbody>
     </table>
-
   </div>
 
   <div id="update" class="container" style="visibility: hidden;">
     <h3>Add User</h3>
+
     <form id="updateForm" name="updateForm" method="PUT" action="/users">
+
 
       <input type="hidden" name="emp_id" value="<%= users[0].emp_id %>" />
       <div class="form-group row">
@@ -72,6 +72,8 @@
           </select>
         </div>
       </div>
+
+      </div>
       <div class="form-group row">
         <div class="col-sm-10">
           <button type="submit" class="btn btn-primary">Save</button>
@@ -83,10 +85,8 @@
 
   <script type="text/javascript">
     function deleteUser(id) {
-
       var data = {};
       data.emp_id = id;
-
       $.ajax({
         type: 'DELETE',
         data: JSON.stringify(data),
@@ -97,13 +97,11 @@
         }
       });
     }
-
     $("#updateForm").submit(function (event) {
       event.preventDefault(); //prevent default action 
       var post_url = $(this).attr("action"); //get form action url
       var request_method = $(this).attr("method"); //get form GET/POST method
       var form_data = $(this).serialize(); //Encode form elements for submission
-
       $.ajax({
         url: post_url,
         type: request_method,
@@ -112,13 +110,10 @@
         window.location.href = '/users/';
       });
     });
-
-  </script>
-  <script>
-
     function showUpdateForm() {
-      document.getElementById("update").setAttribute("style", "visibility: visible");
+     document.getElementById("update").setAttribute("style", "visibility: visible");
     }
+
 
   </script>
 </body>

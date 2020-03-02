@@ -67,6 +67,7 @@ router.get('/search', function (req, res, next) {
 	res.render('employees/search');
 });
 //search results
+
 router.get('/employee', function (req, res, next) {
 	connection.query("SELECT * FROM employees WHERE username = ?;", req.query.username, function (err, result) {
 		if (err) { throw err; }
@@ -77,8 +78,8 @@ router.get('/employee', function (req, res, next) {
 	});
 });
 
+//comment here 
 router.get('/download', function (req, res, next) {
-
 	connection.query("SELECT * FROM employees;", function (err, result) {
 
 		if (err) { throw err; }
@@ -99,9 +100,6 @@ router.get('/download', function (req, res, next) {
 		}
 	});
 
-
-
 });
-
 module.exports = router;
 

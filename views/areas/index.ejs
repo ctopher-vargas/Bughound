@@ -1,11 +1,8 @@
 <html>
-
 <head>
     <% include ../partials/head %>
 </head>
-
 <body>
-
     <div class="container">
         <h3>Areas</h3>
         <table class="table">
@@ -20,6 +17,7 @@
             </thead>
             <tbody>
                 <% areas.forEach(function(area) { %>
+
                 <tr>
                     <form id="updateArea" value="<%=id %>" name="updateArea" method="POST"
                         action="/areas/area/<%=area.area_id %>">
@@ -36,6 +34,7 @@
                             class="btn btn-primary">Delete</button></td>
                 </tr>
                 <% }); %>
+
                 <tr>
                     <form id="addArea" value="<%=id %>" method="POST" action="/areas/<%=id %>">
                         <td>Area</td>
@@ -50,14 +49,11 @@
 
     </div>
 
-
     <script type="text/javascript">
-
+       <script type="text/javascript">
         function deleteArea(id, prog_id) {
-
             var data = {};
             data.area_id = id;
-
             $.ajax({
                 type: 'DELETE',
                 data: JSON.stringify(data),
@@ -68,22 +64,6 @@
                 }
             });
         }
-        /*$("#updateArea").submit(function (event) {
-            event.preventDefault(); //prevent default action 
-            var post_url = $(this).attr("action"); //get form action url
-            var request_method = $(this).attr("method"); //get form GET/POST method
-            var form_data = $(this).serialize(); //Encode form elements for submission
-            var id = $("#hiddenProgId2").attr("value");
-            $.ajax({
-                url: post_url,
-                type: 'PUT',
-                data: form_data
-            }).done(function (response) {
-                window.location.href = '/areas/' + id;
-            }).fail(function (response) {
-                console.log(response);
-            });
-        }); */
 
         $("#addArea").submit(function (event) {
             event.preventDefault(); //prevent default action 
@@ -103,7 +83,5 @@
             });
         });
     </script>
-
 </body>
-
 </html>
