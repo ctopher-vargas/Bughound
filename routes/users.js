@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var connection = require('../db');
 var fs = require('fs');
-var parser = require('xml2json');
+var parser = require('js2xmlparser');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -83,12 +83,9 @@ router.get('/download', function (req, res, next) {
 
 		if (err) { throw err; }
 		else {
-
-			var object = { employees: result };
-			var stringified = JSON.stringify(object);
-			console.log(stringified);
-			var xml = parser.toXml(stringified);
-			console.log(xml);
+            console.log(result);
+			var object = { employee: result };
+			var xml = parser.parse("employees", object);
 			fs.writeFile('employees.xml', xml, function (err, data) {
 				if (err) {
 					console.log(err);

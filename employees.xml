@@ -1,1 +1,17 @@
-<employees emp_id="1010" name="alex22" username="alex" password="alex" userlevel="1"></employees><employees emp_id="1011" name="chris" username="chris" password="chris" userlevel="1"></employees>
+<?xml version='1.0'?>
+<employees>
+    <employee>
+        <emp_id>1010</emp_id>
+        <name>alex22</name>
+        <username>alex</username>
+        <password>alex</password>
+        <userlevel>1</userlevel>
+    </employee>
+    <employee>
+        <emp_id>1011</emp_id>
+        <name>chris</name>
+        <username>chris</username>
+        <password>chris</password>
+        <userlevel>1</userlevel>
+    </employee>
+</employees>
