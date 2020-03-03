@@ -78,8 +78,8 @@ router.get('/employee', function (req, res, next) {
 	});
 });
 
-//comment here 
-router.get('/download', function (req, res, next) {
+//download employees xml
+router.get('/download/xml', function (req, res, next) {
 	connection.query("SELECT * FROM employees;", function (err, result) {
 
 		if (err) { throw err; }
@@ -101,5 +101,31 @@ router.get('/download', function (req, res, next) {
 	});
 
 });
+router.get('/download/ascii', function (req, res, next) {
+	connection.query("SELECT * FROM employees;", function (err, result) {
+
+		if (err) { throw err; }
+		else {
+            console.log(result);
+			const textToWrite = result.map(getUser).join('\n');
+			fs.writeFile('employees.txt', textToWrite, function (err, data) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.download('employees.txt', function(err, data){
+						console.log('downloaded?');
+					});
+				}
+			});
+		}
+	});
+
+});
+
+function getUser(item) {
+	var user = [item.emp_id, item.name, item.username, item.password, item.userlevel].join(",");
+	return user;
+}
 module.exports = router;
 

@@ -1,0 +1,18 @@
+<?xml version='1.0'?>
+<areas>
+    <area>
+        <area_id>1022</area_id>
+        <prog_id>1004</prog_id>
+        <area>parser12</area>
+    </area>
+    <area>
+        <area_id>1025</area_id>
+        <prog_id>1004</prog_id>
+        <area>parser12</area>
+    </area>
+    <area>
+        <area_id>1026</area_id>
+        <prog_id>1005</prog_id>
+        <area>backend</area>
+    </area>
+</areas>

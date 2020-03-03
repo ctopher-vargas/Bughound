@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var connection = require('../db');
+var fs = require('fs');
+var parser = require('js2xmlparser');
 
 //shows all programs to edit areas
 router.get('/', function(req, res, next) {
@@ -78,5 +80,103 @@ router.delete('/', function(req, res, next){
 		}
 	}); 
 }); 
+
+//download areas xml per program
+router.get('/:prog_id/download', function (req, res, next) {
+	connection.query("SELECT * FROM areas WHERE prog_id = ?;", req.params.prog_id, function (err, result) {
+
+		if (err) { throw err; }
+		else {
+            console.log(result);
+			var object = { area: result };
+			var xml = parser.parse("areas", object);
+			fs.writeFile('areas.xml', xml, function (err, data) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.download('areas.xml', function(err, data){
+						console.log('areas downloaded');
+					});
+				}
+			});
+		}
+	});
+
+});
+
+//download areas xml for a particular program
+router.get('/:prog_id/download/xml', function (req, res, next) {
+	connection.query("SELECT * FROM areas WHERE prog_id = ?;", req.params.prog_id, function (err, result) {
+
+		if (err) { throw err; }
+		else {
+            console.log(result);
+			var object = { area: result };
+			var xml = parser.parse("areas", object);
+			fs.writeFile('areas.xml', xml, function (err, data) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.download('areas.xml', function(err, data){
+						console.log('areas downloaded');
+					});
+				}
+			});
+		}
+	});
+
+});
+
+//download areas text for a particular program
+router.get('/:prog_id/download/ascii', function (req, res, next) {
+	connection.query("SELECT * FROM areas WHERE prog_id = ?;", req.params.prog_id, function (err, result) {
+
+		if (err) { throw err; }
+		else {
+            console.log(result);
+			const textToWrite = result.map(getArea).join('\n');
+			fs.writeFile('areas.txt', textToWrite, function (err, data) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.download('areas.txt', function(err, data){
+						console.log('areas downloaded');
+					});
+				}
+			});
+		}
+	});
+
+});
+
+router.get('/download/ascii', function (req, res, next) {
+	connection.query("SELECT * FROM areas;", function (err, result) {
+
+		if (err) { throw err; }
+		else {
+            console.log(result);
+			const textToWrite = result.map(getArea).join('\n');
+			fs.writeFile('allareas.txt', textToWrite, function (err, data) {
+				if (err) {
+					console.log(err);
+				}
+				else {
+					res.download('allareas.txt', function(err, data){
+						console.log('all areas downloaded');
+					});
+				}
+			});
+		}
+	});
+
+});
+
+function getArea(item) {
+	var area = [item.area_id,item.prog_id, item.area].join(",");
+	return area;
+}
 
 module.exports = router;
