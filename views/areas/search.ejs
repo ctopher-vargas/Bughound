@@ -1,34 +1,32 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bughound</title>
-    <% include ../partials/head %>
- </head>
-  <body>
-    <div class="container">
-      <h3>Click on a Programs to edit areas</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Program Name</th>
-              <th>Release</th>
-              <th>Version</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% programs.forEach(function(programs) { %>
-              <tr>
-                <td><a href="/areas/<%=programs.prog_id%>"><%=programs.prog_id%></a></td>
-                <td><%=programs.program%></td>
-                <td><%=programs.program_release%></td>
-                <td><%=programs.program_version%></td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+<% include ../partials/head %>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Add/Edit Areas</h1>      
+      <p>Click on a program</p>
     </div>
-  </body>
-</html>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Program Name</th>
+          <th>Release</th>
+          <th>Version</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% programs.forEach(function(programs) { %>
+          <tr>
+            <td><a href="/areas/<%=programs.prog_id%>"><%=programs.prog_id%></a></td>
+            <td><%=programs.program%></td>
+            <td><%=programs.program_release%></td>
+            <td><%=programs.program_version%></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+ <% include ../partials/footer %>

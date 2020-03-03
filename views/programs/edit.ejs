@@ -1,40 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bughound</title>
-    <% include ../partials/head %>
- </head>
-  <body>
-    <div class="container">
-      <h3>Edit/Delete a Programs</h3>
-        <table class="table">
-          <thead>
+<% include ../partials/head %>
+
+    <div style="padding-bottom: 100px;" class="container">
+      <div class="jumbotron">
+        <h1>Edit/Delete a Program</h1>      
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Program Name</th>
+            <th>Release</th>
+            <th>Version</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% programs.forEach(function(programs) { %>
             <tr>
-              <th>ID</th>
-              <th>Program Name</th>
-              <th>Release</th>
-              <th>Version</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <td><%=programs.prog_id%></td>
+              <td><%=programs.program%></td>
+              <td><%=programs.program_release%></td>
+              <td><%=programs.program_version%></td>
+              <td><a class="btn btn-primary" href="/programs/edit/<%=programs.prog_id%>" role="button">Edit</a></td>
             </tr>
-          </thead>
-          <tbody>
-            <% programs.forEach(function(programs) { %>
-              <tr>
-                <td><%=programs.prog_id%></td>
-                <td><%=programs.program%></td>
-                <td><%=programs.program_release%></td>
-                <td><%=programs.program_version%></td>
-                <td><a class="btn btn-primary" href="/programs/edit/<%=programs.prog_id%>" role="button">Edit</a></td>
-                <td>
-                  <form class="delete-form" action="/programs/<%=programs.prog_id%>?_method=DELETE" method="POST">
-                    <button class="btn btn-danger">Delete</button>
-                  </form>
-                </td>
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+          <% }); %>
+        </tbody>
+      </table>
     </div>
-  </body>
-</html>
+
+<% include ../partials/footer %>

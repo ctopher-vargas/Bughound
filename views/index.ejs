@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <% include ./partials/head %>
-  </head>
-  <% include ./partials/navbar %>
-  <body>
-    <% include ./partials/messages %>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-    <a href="bugs/new">Enter New Bug</a>
-    <a href="bugs/edit">Update Existing Bug</a>
-    <a href="dbmaintance">Database Maintance</a>
-   </body>
-   <%if(currentUser) {%>
-   <p>User: <%= currentUser.username%></p>
-   <p>UserLever: <%= currentUser.userlevel%></p>
-   <% } %>
-</html>
+<% include ./partials/head %>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Welcom to <%=title%></h1>      
+    <% if(currentUser) { %>
+      <p>User: <%= currentUser.username%></p>
+      <p>UserLever: <%= currentUser.userlevel%></p>
+    <% } %>
+  </div>
+  <a class="btn btn-primary" href="/bugs/new" role="button">Enter New Bug</a>
+  <a class="btn btn-primary" href="/bugs/edit" role="button">Update Existing Bug</a>
+  <% if(currentUser && currentUser.userlevel == 3 ) { %>
+    <a class="btn btn-primary" href="/dbmaintance" role="button">Database Maintance</a>  
+  <% } %>
+</div>
+
+<% include ./partials/footer %>

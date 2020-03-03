@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bughound</title>
-    <% include ./partials/head %>
-  </head>
-  <body>
-    <h1>Database Maintance </h1>
-    <ul>
-      <li><a href="areas/">Add/Edit Areas</a></li>
-      <li><a href="programs/new">Add Programs</a></li>
-      <li><a href="programs/search">Edit Programs</a></li>
-      <li><a href="users/new">Add Employees</a></li>
-      <li><a href="users/search">Edit Employee</a></li>
-    </ul>
-   </body>
-</html>
+<% include ./partials/head %>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1>Database Maintance</h1>      
+      <p>Make changes to any of the following</p>
+    </div>
+      <a class="btn btn-primary" href="areas/" role="button">Add/Edit Areas</a>
+      <a class="btn btn-primary" href="programs/new" role="button">Add Programs</a>
+      <a class="btn btn-primary" href="programs/search" role="button">Edit Programs</a>
+      <a class="btn btn-primary" href="users/new" role="button">Add Employees</a>
+      <a class="btn btn-primary" href="users/search" role="button">Edit Employee</a>
+      <a class="btn btn-primary" href="export" role="button">Export Areas</a>
+  </div>
+
+<% include ./partials/footer %>

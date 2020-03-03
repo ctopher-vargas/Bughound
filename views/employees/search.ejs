@@ -1,26 +1,33 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bughound</title>
-    <% include ../partials/head %>
-  </head>
-  <body>
-    <h1>Bughound</h1>
-    <p>Search user in our database</p>
+<% include ../partials/head %>
+
+    <% include ../partials/search %>
+
     <div class="container">
-        <form name="form_search" method="GET" action="/users/employee">
-            <div class="form-group row">
-                <label for="search" class="col-sm-2 col-form-label">Username</label>
-                <div class="col-sm-4">
+        <h3>Users</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Username</th>
+              <th>User Level</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% users.forEach(function(user) { %>
+              <tr>
+                <td><a href="/users/edit/<%=user.emp_id%>"><%=user.emp_id%></a></td>
+                <td><%=user.name%></td>
+                <td><%=user.username%></td>
+                <td><%=user.userlevel%></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+    <div class="container">
+   
+<% include ../partials/footer %>
 
-                    <input type="text" class="form-control" name="username" id="search" required="required">
 
-                </div>
-                <div class="col-sm-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</body>
-</html>

@@ -1,15 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bughound</title>
-    <% include ../partials/head %>
+<% include ../partials/head %>
 
-  </head>
-  <body>
-    <h1>Bughound</h1>
-    <p>Enter a new program in the database</p>
     <div class="container">
-        <form action="/programs" method="POST" >
+        <div class="jumbotron">
+            <h1>Enter a new program</h1>      
+        </div>
+        <form style="padding-bottom: 100px;" action="/programs" method="POST" >
             <div class="form-group">
                 <label for="name" class="col-sm-2 col-form-label">Program Name</label>
                 <div class="col-sm-4">
@@ -33,10 +28,10 @@
             <div class="form-group">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-success">Submit</button>
-                    <a class="btn btn-danger" href="/programs" role="button">Cancel</a>
+                    <a class="btn btn-danger" href="/dbmaintance" role="button">Cancel</a>
                 </div>
             </div>
         </form>
     </div>
-  </body>
-</html>
+
+<% include ../partials/footer %>

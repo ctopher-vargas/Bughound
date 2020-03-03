@@ -1,9 +1,53 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-<body>
-	<h1>Search an employee</h1>
-</body>
+<% include ../partials/head %>
+
+	<div style="padding-bottom: 100px;" class="container">
+		<div class="jumbotron">
+			<h1>Edit <%=user[0].name%></h1>
+		</div>	
+		<form action="/users/<%=user[0].emp_id%>?_method=PUT" method="POST" >
+            <div class="form-group">
+                <label for="name" class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-4">
+                    <input type="text" name="name" class="form-control" value="<%=user[0].name%>" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username" class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-4">
+                    <input type="text" name="username" class="form-control" value="<%=user[0].username%>" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="col-sm-2 col-form-label">Password</label>
+                <div class="col-sm-4">
+                    <input type="text" name="password" class="form-control" value="<%=user[0].password%>" required>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label for="userlevel" class="col-sm-2 col-form-label">User Level</label>
+            	<div class="col-sm-4">
+            		<select class="form-control" name="userlevel" id="userlevel" required>
+		            <%
+		              var options = [ 1, 2, 3 ];
+		              for ( var i = 0; i < options.length; i++ )
+		              {
+		                  var selected = ( user[0].userlevel == options[i] ) ? "selected" : "";
+		                  %><option value="<%=options[ i ] %>" <%=selected %>><%=options[i] %></option><%
+		              }
+		              %>
+            		</select>
+            	</div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    <a class="btn btn-primary" href="/dbmaintance" role="button">Cancel</a>
+                </div>
+            </div>
+        </form>	
+        <form class="delete-form" action="/users/<%=user[0].emp_id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+	</div>
+
+<% include ../partials/footer %>
