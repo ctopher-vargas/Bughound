@@ -56,10 +56,13 @@ app.use('/bugs', bugsRouter);
 app.use('/programs', programsRouter);
 app.use('/areas', areasRouter);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+app.get('*', function(req, res){
+  res.sendFile(__dirname+'/public/views/error.ejs');
 });
+// catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // error handler
 app.use(function(err, req, res, next) {
