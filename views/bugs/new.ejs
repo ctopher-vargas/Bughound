@@ -10,10 +10,11 @@
 			<div class="form-row">	
     			<div class="form-group col-md-3">
     				<label for="prog_id">program</label>
-    				<select class="custom-select mr-sm-2" id="prog_id" name="prog_id">
-    					<option>Program one</option>
-    					<option>program 2</option>
-    					<option>program 3 </option>
+    				<select class="custom-select mr-sm-2" onchange="dynamicArea()" id="prog_id" name="prog_id">
+    					<option value="" disabled selected>Choose...</option>
+    					 <% programs.forEach(function(programs) { %>
+    					 	<option value="<%=programs.prog_id%>"><%=programs.program%></option>
+    					 <% }); %>
     				</select>
     			</div>
 				<div class="form-group col-md-3">
@@ -29,7 +30,7 @@
 				</div>
 
 		    	<div class="form-group col-md-3">
-					<label for="severity">Severity</label>
+					<label for="severity">Severity</label> 
 					<select class="custom-select mr-sm-2" id="severity" name="severity" >
 						<option value="1">minor</option>
 						<option value="3">serious</option>
@@ -65,9 +66,9 @@
 				<div class="form-group col-md-3">
 					<label for="reported_by">reported by</label>
 					<select class="custom-select mr-sm-2" id="reported_by" name="reported_by">
-						<option>emp 1</option>
-    					<option>emp 2</option>
-    					<option>emp 3</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					 <% }); %>
     				</select>
 				</div>
 				<div class="form-group col-md-3">
@@ -81,17 +82,18 @@
 				<div class="form-group col-md-3">
 					<label for="area_id">functional area</label>
 					<select class="custom-select mr-sm-2"  id="area_id" name="area_id">
-						<option value="1">minor</option>
-						<option value="3">serious</option>
-						<option value="3">fatal</option>
+						<option value="" disabled selected>Choose...</option>
+						<% areas.forEach(function(areas) { %>
+								<option value="<%=areas.area_id%>"><%=areas.area%></option>
+					    <% }); %> 
 					</select>
 				</div>
 				<div class="form-group col-md-3">
 					<label for="assigned_to">assigned to</label>
 					<select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
-					<option value="1">minor</option>
-						<option value="3">serious</option>
-						<option value="3">fatal</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					<% }); %>
 					</select>
 				</div>
 			</div>		
@@ -148,9 +150,9 @@
 				<div class="form-group col-md-3">
 					<label for="resolved_by">resolved by</label>
 					<select class="custom-select mr-sm-2" id="resolved_by" name="resolved_by">
-						<option value="1">area 1</option>
-						<option value="3">area 2</option>
-						<option value="3">area 3</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					<% }); %>
 					</select>
 				</div>
 				<div class="form-group col-md-3">
@@ -162,9 +164,9 @@
 				<div class="form-group col-md-3">
 					<label for="tested_by">tested by</label>
 					<select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
-						<option value="1">area 1</option>
-						<option value="3">area 2</option>
-						<option value="3">area 3</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					<% }); %>
 					</select>
 				</div>		
 				<div class="form-group col-md-3">
@@ -181,7 +183,7 @@
 					</select>
 				</div>
     		</div>
-    		 <div class="form-group row">
+    		<div class="form-group row">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a class="btn btn btn-primary" role="button">Reset</a>
@@ -190,5 +192,20 @@
             </div>
     	</form>
     </div>
-
+   
+   <script>
+   		function dynamicArea() {
+			var progid = document.getElementById("prog_id").value;
+			console.log(progid);
+			document.getElementById("area_id").options.length = 0;
+			var count = 0; 
+			<% areas.forEach(function(areas) { %>
+				if(<%=areas.prog_id%> == progid) {
+					document.getElementById("area_id").options[count] = new Option('<%=areas.area%>', <%=areas.area_id%>); 
+					count++;
+				}
+			<% }); %>
+		}
+   </script>
+    
 <% include ../partials/footer %>
