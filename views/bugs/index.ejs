@@ -1,11 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Bughound</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1>Bughound</h1>
-    <p>Edit any bugs in our database</p>
-  </body>
-</html>
+<% include ../partials/head %>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Bugs</h1>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Bug Id</th>
+                <th>Program</th>
+                <th>Summary</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <% bugs.forEach(function(bug) { %>
+                <tr>
+
+                    <td><%= bug.bug_id %></td>
+                    <td><%= bug.program %></td>
+                    <td><%= bug.problem_summary %></td>
+                </tr>
+            <% }); %>
+            <tr>
+                <td><a class="btn btn-danger" href="/home" role="button">Cancel</a></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+<% include ../partials/footer %>

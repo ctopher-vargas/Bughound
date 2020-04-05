@@ -4,7 +4,15 @@ var mysql = require('mysql');
 var connection = require('../db'); 
 
 router.get('/', function(req, res, next) {
-  res.render('bugs/index');
+	connection.query("SELECT bugs.bug_id, bugs.problem_summary, programs.program FROM bugs, programs WHERE bugs.prog_id = programs.prog_id;",
+		function(err, results){
+		if(err) {throw err;}
+		else{
+			res.render('bugs/index', {bugs: results});
+		}
+
+		});
+
 });
 //callback hell
 router.get('/new', function(req, res, next){
@@ -52,7 +60,20 @@ router.get('/search', function(req, res, next){
 			});
 		}
 	});
-}); 
+});
+
+router.post('/search', function (req, res, next) {
+
+	connection.query("SELECT * FROM bugs WHERE prog_id = ? AND severity = ? AND area_id = ? AND assigned_to = ?;"
+	, [req.body.prog_id, req.body.report_type, req.body.severity, req.body.area_id, req.body.assigned_to], function (err, bugs) {
+			if (err){throw err}
+			else{
+				console.log(bugs);
+			}
+	});
+
+
+});
 
 router.get('/delete', function(req, res, next){
 	res.render('bugs/delete'); 
