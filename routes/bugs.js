@@ -63,12 +63,12 @@ router.get('/search', function(req, res, next){
 });
 
 router.post('/search', function (req, res, next) {
-
-	connection.query("SELECT * FROM bugs WHERE prog_id = ? AND severity = ? AND area_id = ? AND assigned_to = ?;"
+	const sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE bugs.prog_id = ? AND severity = ? AND area_id = ? AND assigned_to = ? ;"
+	connection.query(sql
 	, [req.body.prog_id, req.body.report_type, req.body.severity, req.body.area_id, req.body.assigned_to], function (err, bugs) {
 			if (err){throw err}
 			else{
-				console.log(bugs);
+				res.render('bugs/index', {bugs: bugs});
 			}
 	});
 
