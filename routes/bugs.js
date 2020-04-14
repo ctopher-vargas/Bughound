@@ -63,7 +63,11 @@ router.get('/search', function(req, res, next){
 });
 
 router.post('/search', function (req, res, next) {
-	const sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE bugs.prog_id = ? AND severity = ? AND area_id = ? AND assigned_to = ? ;"
+
+
+	console.log(req.body);
+	constructSearchQuery(req.body);
+	const sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE bugs.prog_id = ? AND severity = ? ;"
 	connection.query(sql
 	, [req.body.prog_id, req.body.report_type, req.body.severity, req.body.area_id, req.body.assigned_to], function (err, bugs) {
 			if (err){throw err}
@@ -77,6 +81,51 @@ router.post('/search', function (req, res, next) {
 
 router.get('/delete', function(req, res, next){
 	res.render('bugs/delete'); 
-}); 
+});
+
+function constructSearchQuery(s){
+	let sql = "";
+	let sqlParams = [];
+	if(s.prog_id != null){
+		sql += " prog_id = ? AND";
+		sqlParams.push(s.prog_id);
+	}
+	if(s.report_type != null){
+		sql += " report_type = ? AND";
+		sqlParams.push(s.report_type);
+	}
+	if(s.severity != null){
+		sql += " severity = ? AND";
+		sqlParams.push(s.severity);
+	}
+	if(s.area_id != null){
+		sql += " area_id = ? AND";
+		sqlParams.push(s.area_id);
+	}
+	if (s.assigned_to != null){
+		sql += " assigned_to = ? AND";
+		sqlParams.push(s.assigned_to);
+	}
+	if(s.status != null){
+		sql += " status = ? AND ";
+		sqlParams.push(s.status);
+	}
+	if(s.priority != null){
+		sql += " priority = ? AND";
+		sqlParams.push(s.priority);
+	}
+	if(s.resolution != null){
+		sql += " resolution = ?;";
+		sqlParams.push(s.resolution);
+	}
+
+	console.log(sql.substring(sql.length -3 , sql.length) === "AND");
+
+	if(sqlParams.length === 0)
+		return "SELECT * from bugs;";
+	console.log("SELECT * from bugs WHERE" + sql);
+	return "SELECT * from bugs WHERE" + sql;
+
+}
 
 module.exports = router;

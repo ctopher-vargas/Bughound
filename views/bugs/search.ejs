@@ -22,6 +22,7 @@
             <div class="form-group col-md-3">
                 <label for="report_type">Report Type</label>
                 <select class="custom-select mr-sm-2" id="report_type" name="report_type">
+                    <option value="" disabled selected>ALL</option>
                     <option value="1">Coding Error</option>
                     <option value="2">Design Issue</option>
                     <option value="3">Suggestion</option>
@@ -35,6 +36,7 @@
             <div class="form-group col-md-3">
                 <label for="severity">Severity</label>
                 <select class="custom-select mr-sm-2" id="severity" name="severity">
+                    <option value="" disabled selected>ALL</option>
                     <option value="1">minor</option>
                     <option value="3">serious</option>
                     <option value="3">fatal</option>
@@ -56,6 +58,7 @@
             <div class="form-group col-md-3">
                 <label for="assigned_to">assigned to</label>
                 <select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
+                    <option value="" disabled selected>ALL</option>
                     <% users.forEach(function(users) { %>
                         <option value="<%= users.emp_id %>"><%= users.username %></option>
                     <% }); %>
@@ -66,6 +69,7 @@
             <div class="form-group col-md-3">
                 <label for="status">status</label>
                 <select class="custom-select mr-sm-2" id="status" name="status">
+                    <option value="" disabled selected>ALL</option>
                     <option value="1">open</option>
                     <option value="2">closed</option>
                 </select>
@@ -75,6 +79,7 @@
             <div class="form-group col-md-3">
                 <label for="priority">priority</label>
                 <select class="custom-select mr-sm-2" id="priority" name="priority">
+                    <option value="" disabled selected>ALL</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -87,6 +92,7 @@
             <div class="form-group col-md-3">
                 <label for="resolution">resolution</label>
                 <select class="custom-select mr-sm-2" id="resolution" name="resolution">
+                    <option value="" disabled selected>ALL</option>
                     <option value="1">pending</option>
                     <option value="2">fixed</option>
                     <option value="3">irresproducible</option>
