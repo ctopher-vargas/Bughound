@@ -65,27 +65,11 @@ router.get('/search', function(req, res, next){
 router.post('/search', function (req, res, next) {
 
 	let s = JSON.parse(JSON.stringify(req.body));
-	let sql = '';
-	let sqlParams = [];
-	for (var key in s) {
-		if (s.hasOwnProperty(key)) {
-			sql += " " + key + " = ? AND";
-			sqlParams.push(key);
-		}
-	}
 
-	if(sqlParams.length === 0)
-		sql =  "SELECT * from bugs;";
-	else{
-		sql = "SELECT * from bugs WHERE" + sql
-		sql = sql.substring(0 , sql.length - 3);
-
-	}
-
+	let [sql, sqlParams] = constructSearchQuery(s);
 
 	console.log(sql);
 	console.log(sqlParams.toString());
-	//constructSearchQuery(req.body);
 
 	connection.query(sql, sqlParams, function (err, bugs) {
 			if (err){throw err}
@@ -102,22 +86,23 @@ router.get('/delete', function(req, res, next){
 });
 
 function constructSearchQuery(s){
-	let sql = "";
+	let sql = '';
 	let sqlParams = [];
 	for (var key in s) {
 		if (s.hasOwnProperty(key)) {
-			sql += key + " = ? AND ";
-			sqlParams.push(key);
+			sql += " bugs." + key + " = ? AND";
+			sqlParams.push(s[key]);
 		}
 	}
 
-	console.log(sql.substring(sql.length -3 , sql.length) === "AND");
-
 	if(sqlParams.length === 0)
-		return "SELECT * from bugs;";
-	console.log("SELECT * from bugs WHERE" + sql);
-	return "SELECT * from bugs WHERE" + sql;
+		sql =  "SELECT bugs.bug_id, programs.program, bugs.problem_summary from bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
+	else{
+		sql = "SELECT bugs.bug_id, programs.program, bugs.problem_summary FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
+		sql = sql.substring(0 , sql.length - 3);
 
+	}
+	return [sql, sqlParams];
 }
 
 module.exports = router;
