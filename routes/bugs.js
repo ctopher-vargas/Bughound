@@ -6,7 +6,7 @@ var connection = require('../db');
 router.get('/', function(req, res, next) {
   res.render('bugs/index');
 });
-//callback hell
+
 router.get('/new', function(req, res, next){
 	connection.query("SELECT prog_id, program FROM programs;", function(err, programs){
 		if (err) { throw err; }
@@ -37,7 +37,7 @@ router.post('/', function(req, res, next){
 	}
 
     connection.query(sql, [req.body.prog_id, req.body.area_id, req.body.report_type, req.body.severity,
-    					   req.body.problem_summary, req.body.reproducible, req.body.problem, req.body.suggested_fix, 
+    					   req.body.problem_summary, reproducible, req.body.problem, req.body.suggested_fix, 
     					   req.body.reported_by, req.body.date, req.body.assigned_to, req.body.comments,
     					   req.body.status, req.body.priority, req.body.resolution, req.body.resolution_version, 
     					   req.body.resolved_by, req.body.resolved_date, req.body.tested_by, req.body.tested_date, req.body.treat_as], function(err, result){
