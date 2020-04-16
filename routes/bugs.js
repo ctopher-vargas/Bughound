@@ -18,7 +18,6 @@ router.get('/new', function(req, res, next){
 						if (err) { throw err; }
 						else {
 							var program_count = Object.keys(programs).length;
-							console.log(program_count);
 							res.render('bugs/new', { programs: programs, users: users, areas: areas, program_count: program_count });
 						}
 					}); 
@@ -27,6 +26,29 @@ router.get('/new', function(req, res, next){
 		}
 	});
 }); 
+
+router.post('/', function(req, res, next){
+	var sql = 'INSERT INTO bugs(prog_id, area_id, report_type, severity, problem_summary, reproducible, problem,' +
+			  'suggested_fix, reported_by, date, assigned_to, comments, status, priority, resolution,' + 
+			  'resolution_version, resolved_by, resolved_date, tested_by, tested_date, treat_as) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'; 
+	var reproducible = false; 
+	if(req.body.reproducible){
+		reproducible = true; 
+	}
+
+    connection.query(sql, [req.body.prog_id, req.body.area_id, req.body.report_type, req.body.severity,
+    					   req.body.problem_summary, req.body.reproducible, req.body.problem, req.body.suggested_fix, 
+    					   req.body.reported_by, req.body.date, req.body.assigned_to, req.body.comments,
+    					   req.body.status, req.body.priority, req.body.resolution, req.body.resolution_version, 
+    					   req.body.resolved_by, req.body.resolved_date, req.body.tested_by, req.body.tested_date, req.body.treat_as], function(err, result){
+    	if(err){throw err; }
+    	else {
+    		console.log(result);
+			req.flash("success", " bug successfully entered in the database")
+			res.redirect('/home')
+    	}
+    }); 
+});  
 
 router.get('/edit', function(req, res, next){
 	res.render('bugs/edit'); 
