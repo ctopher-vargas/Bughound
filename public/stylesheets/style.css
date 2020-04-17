@@ -41,3 +41,7 @@ html, body {
 	margin-left: -170px;
 	background: #fff;
 }
+
+#alert-msg {
+  padding-top: 15px; 
+}
