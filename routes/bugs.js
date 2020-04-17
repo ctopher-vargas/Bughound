@@ -59,7 +59,28 @@ router.post('/', function(req, res, next){
 });  
 
 router.get('/edit', function(req, res, next){
-	res.render('bugs/edit'); 
+	let bugSql = "SELECT * FROM bugs WHERE bug_id = ?;";
+	let areaSql = "SELECT * FROM areas WHERE prog_id = ?;";
+	let userSql = "SELECT username, emp_id FROM employees;";
+	let program_name = req.body.program;
+
+	connection.query(bugSql, [req.body.bug_id], function (err, bug) {
+		if (err){throw err;}
+		else{
+			connection.query(areaSql, [req.body.prog_id], function (err, areas) {
+
+				if (err){throw err;}
+				else{
+					connection.query(userSql, function (err, employees) {
+						res.render('bugs/edit', {program: program_name, bug: bug, areas: areas, employees: employees});
+					});
+				}
+
+			});
+		}
+
+	});
+
 }); 
 
 router.get('/search', function(req, res, next){
@@ -118,9 +139,9 @@ function constructSearchQuery(s){
 	}
 
 	if(sqlParams.length === 0)
-		sql =  "SELECT bugs.bug_id, programs.program, bugs.problem_summary from bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
+		sql =  "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
 	else{
-		sql = "SELECT bugs.bug_id, programs.program, bugs.problem_summary FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
+		sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
 		sql = sql.substring(0 , sql.length - 3);
 
 	}
