@@ -111,11 +111,14 @@
 				<div class="form-group col-md-3">
 					<label for="priority">priority</label>
 					<select class="custom-select mr-sm-2" id="priority" name="priority">
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
+						<%
+		              var priority = [ 1, 2, 3 ];
+		              for ( var i = 0; i < priority.length; i++ )
+		              {
+		                  var p_selected = ( bug.priority == priority[i] ) ? "selected" : "";
+		                  %><option value="<%=priority[ i ] %>" <%=p_selected %>><%=priority[i] %></option><%
+		              }
+		              %>
 					</select>
 				</div>
 			</div>
@@ -137,9 +140,14 @@
 				<div class="form-group col-md-3">
 					<label for="resolution_version">resolution version</label>
 					<select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
-						<option value="1">area 1</option>
-						<option value="3">area 2</option>
-						<option value="3">area 3</option>
+						<%
+		              var options = [ 1, 2, 3 ];
+		              for ( var i = 0; i < options.length; i++ )
+		              {
+		                  var selected = ( bug.resolution_version == options[i] ) ? "selected" : "";
+		                  %><option value="<%=options[ i ] %>" <%=selected %>><%=options[i] %></option><%
+		              }
+		              %>
 					</select>
 				</div>
 			</div>
