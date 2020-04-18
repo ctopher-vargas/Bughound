@@ -2,7 +2,7 @@
 
   	<div class="container">
          <div class="jumbotron">
-            <h1>Enter a new Bug</h1>
+            <h1>Edit Bug</h1>
         </div>
     </div>
     <div class="container">
@@ -196,21 +196,5 @@
             </div>
     	</form>
     </div>
-
-   <script>
-   		function dynamicArea() {
-			var progid = document.getElementById("prog_id").value;
-			console.log(progid);
-			document.getElementById("area_id").options.length = 0;
-			var count = 1;
-			document.getElementById("area_id").options[0] = new Option('--');
-			<% areas.forEach(function(areas) { %>
-				if(<%=areas.prog_id%> == progid) {
-					document.getElementById("area_id").options[count] = new Option('<%=areas.area%>', <%=areas.area_id%>);
-					count++;
-				}
-			<% }); %>
-		}
-   </script>
 
 <% include ../partials/footer %>
