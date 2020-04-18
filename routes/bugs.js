@@ -73,7 +73,7 @@ router.get('/edit/:bug_id', function(req, res, next){
 				if (err){throw err;}
 				else{
 					connection.query(userSql, function (err, employees) {
-						res.render('bugs/edit', {program: areas[0].program, bugs: bugs, areas: areas, users: employees});
+						res.render('bugs/edit', {program: areas[0].program, bug: bugs[0], areas: areas, users: employees});
 					});
 				}
 
