@@ -58,21 +58,22 @@ router.post('/', function(req, res, next){
     }); 
 });  
 
-router.get('/edit', function(req, res, next){
+router.get('/edit/:bug_id', function(req, res, next){
 	let bugSql = "SELECT * FROM bugs WHERE bug_id = ?;";
 	let areaSql = "SELECT * FROM areas WHERE prog_id = ?;";
 	let userSql = "SELECT username, emp_id FROM employees;";
-	let program_name = req.body.program;
 
-	connection.query(bugSql, [req.body.bug_id], function (err, bug) {
+
+	connection.query(bugSql, [req.params.bug_id], function (err, bugs) {
 		if (err){throw err;}
 		else{
-			connection.query(areaSql, [req.body.prog_id], function (err, areas) {
+
+			connection.query(areaSql, [bugs[0].prog_id], function (err, areas) {
 
 				if (err){throw err;}
 				else{
 					connection.query(userSql, function (err, employees) {
-						res.render('bugs/edit', {program: program_name, bug: bug, areas: areas, employees: employees});
+						res.render('bugs/edit', {program: program_name, bugs: bugs, areas: areas, users: employees});
 					});
 				}
 

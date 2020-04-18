@@ -9,13 +9,8 @@
     	<form action="/bugs" method="POST">
 			<div class="form-row">
     			<div class="form-group col-md-3">
-    				<label for="prog_id">program</label>
-    				<select class="custom-select mr-sm-2" onchange="dynamicArea()" id="prog_id" name="prog_id" required>
-    					<option value="">--</option>
-    					 <% programs.forEach(function(programs) { %>
-    					 	<option value="<%=programs.prog_id%>"><%=programs.program%></option>
-    					 <% }); %>
-    				</select>
+    				<label for="prog_id"><%=program%></label>
+
     			</div>
 				<div class="form-group col-md-3">
 					<label for="report_type">Report Type</label>
