@@ -60,7 +60,7 @@ router.post('/', function(req, res, next){
 
 router.get('/edit/:bug_id', function(req, res, next){
 	let bugSql = "SELECT * FROM bugs WHERE bug_id = ?;";
-	let areaSql = "SELECT * FROM areas WHERE prog_id = ?;";
+	let areaSql = "SELECT areas.area, programs.program, areas.area_id FROM areas JOIN programs ON areas.prog_id = programs.prog_id WHERE areas.prog_id = ?;";
 	let userSql = "SELECT username, emp_id FROM employees;";
 
 
@@ -73,7 +73,7 @@ router.get('/edit/:bug_id', function(req, res, next){
 				if (err){throw err;}
 				else{
 					connection.query(userSql, function (err, employees) {
-						res.render('bugs/edit', {program: program_name, bugs: bugs, areas: areas, users: employees});
+						res.render('bugs/edit', {program: areas[0].program, bugs: bugs, areas: areas, users: employees});
 					});
 				}
 
