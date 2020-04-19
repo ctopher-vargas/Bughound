@@ -82,7 +82,11 @@ router.get('/edit/:bug_id', function(req, res, next){
 
 	});
 
-}); 
+});
+
+router.post('/edit/:bug_id', function(req, res, next){
+
+});
 
 router.get('/search', function(req, res, next){
 
