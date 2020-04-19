@@ -20,7 +20,7 @@
 		              var report_tyes = [ "Coding Error", "Design Issue",  "Suggestion", "Documentation", "Hardware", "Query"];
 		              for (let i = 0; i < report_tyes.length; i++ )
 		              {
-		                  var selected = ( bug.report_type === i + 1 ) ? "selected" : "";
+		                  var selected = ( bug.report_type == i + 1 ) ? "selected" : "";
 		                  %><option value="<%=i + 1 %>" <%=selected %>><%=report_tyes[i] %></option><%
 		              }
 		              %>
@@ -35,7 +35,7 @@
 		              var severity = [ "minor", "serious",  "fatal"];
 		              for (let i = 0; i < severity.length; i++ )
 		              {
-		                  selected = ( bug.severity === i + 1 ) ? "selected" : "";
+		                  selected = ( bug.severity == i + 1 ) ? "selected" : "";
 		                  %><option value="<%=i + 1 %>" <%=selected %>><%=severity[i] %></option><%
 		              }
 		              %>
@@ -72,7 +72,7 @@
 					<label for="reported_by">reported by</label>
 					<select class="custom-select mr-sm-2" id="reported_by" name="reported_by" required>
 						<% users.forEach(function(users) { %>
-							<% selected = ( users.emp_id === bug.reported_by) ? "selected" : "";%>
+							<% selected = ( users.emp_id == bug.reported_by) ? "selected" : "";%>
     					 	<option value="<%=users.emp_id%>"<%=selected%>><%=users.username%></option>
     					 <% }); %>
     				</select>
@@ -97,7 +97,7 @@
 					<label for="assigned_to">assigned to</label>
 					<select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
 						<% users.forEach(function(users) {%>
-							<% selected = ( users.emp_id === bug.assigned_to) ? "selected" : "";%>
+							<% selected = ( users.emp_id == bug.assigned_to) ? "selected" : "";%>
     					 	<option value="<%=users.emp_id%>"<%=selected%>><%=users.username%></option>
     					 <%}); %>
 					</select>
@@ -117,7 +117,7 @@
 		              var status = [ "open", "closed"];
 		              for (let i = 0; i < status.length; i++ )
 		              {
-		                  selected = ( bug.status === i + 1 ) ? "selected" : "";
+		                  selected = ( bug.status == i + 1 ) ? "selected" : "";
 		                  %><option value="<%=i + 1 %>" <%=selected %>><%=status[i] %></option><%
 		              }
 		              %>
@@ -127,10 +127,10 @@
 					<label for="priority">priority</label>
 					<select class="custom-select mr-sm-2" id="priority" name="priority">
 						<%
-		              var priority = [ 1, 2, 3 ];
+		              var priority = [ 1, 2, 3, 4, 5 ];
 		              for (let i = 0; i < priority.length; i++ )
 		              {
-		                  selected = ( bug.priority === priority[i] ) ? "selected" : "";
+		                  selected = ( bug.priority == priority[i] ) ? "selected" : "";
 		                  %><option value="<%=priority[ i ] %>" <%=selected %>><%=priority[i] %></option><%
 		              }
 		              %>
@@ -146,21 +146,21 @@
 					  "withdrawn by reporter", "need more info", "disagree with suggestion"];
 		              for (let i = 0; i < resolutions.length; i++ )
 		              {
-		                  selected = ( bug.resolution === i + 1 ) ? "selected" : "";
+		                  selected = ( bug.resolution == i + 1 ) ? "selected" : "";
 		                  %><option value="<%=i + 1 %>" <%=selected %>><%=resolutions[i] %></option><%
 		              }
 		              %>
 					</select>
 				</div>
 				<div class="form-group col-md-3">
-					<label for="resolution_version">resolution version</label>
+					<label for="resolution_version">resolution version <%=bug.resolution_version%></label>
 					<select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
 						<%
-		              var options = [ 1, 2, 3 ];
-		              for (let i = 0; i < options.length; i++ )
+		              var r_v = [ 1, 2, 3 ];
+		              for (let i = 0; i < r_v.length; i++ )
 		              {
-		                   selected = ( bug.resolution_version === options[i] ) ? "selected" : "";
-		                  %><option value="<%=options[ i ] %>" <%=selected %>><%=options[i] %></option><%
+		                   selected = ( bug.resolution_version == r_v[i] ) ? "selected" : "";
+		                  %><option value="<%=r_v[ i ] %>" <%=selected %>><%=r_v[i] %></option><%
 		              }
 		              %>
 					</select>
@@ -172,7 +172,7 @@
 					<select class="custom-select mr-sm-2" id="resolved_by" name="resolved_by">
 						<option value="">--</option>
 						<% users.forEach(function(users) { %>
-							<%selected = ( users.emp_id === bug.resolved_by) ? "selected" : "";%>
+							<%selected = ( users.emp_id == bug.resolved_by) ? "selected" : "";%>
     					 	<option value="<%=users.emp_id%>"<%=selected%>><%=users.username%></option>
     					<% }); %>
 					</select>
@@ -188,7 +188,7 @@
 					<select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
 						<<option value="">--</option>
 						<% users.forEach(function(users) { %>
-						<%selected = ( users.emp_id === bug.tested_by) ? "selected" : "";%>
+						<%selected = ( users.emp_id == bug.tested_by) ? "selected" : "";%>
     					 	<option value="<%=users.emp_id%>"<%=selected%>><%=users.username%></option>
     					<% }); %>
 					</select>
@@ -203,10 +203,10 @@
 					<label for="">treat as?</label>
 					<select class="custom-select mr-sm-2" id="treat_as" name="treat_as">
 						<%
-		              options = [ "Yes", "No" ];
+		              var options = [ "Yes", "No" ];
 		              for (let i = 0; i < options.length; i++ )
 		              {
-		                   selected = ( bug.treat_as === i + 1 ) ? "selected" : "";
+		                   selected = ( bug.treat_as == i + 1 ) ? "selected" : "";
 		                  %><option value="<%=i + 1 %>" <%=selected %>><%=options[i] %></option><%
 		              }
 		              %>

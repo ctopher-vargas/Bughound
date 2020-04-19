@@ -84,7 +84,7 @@ router.get('/edit/:bug_id', function(req, res, next){
 
 });
 
-router.post('/edit/:bug_id', function(req, res, next){
+router.put('/edit/:bug_id', function(req, res, next){
 
 });
 
