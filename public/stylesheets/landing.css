@@ -45,7 +45,7 @@ html {
 }
 
 .slideshow li:nth-child(1) { 
-  background-image: url(../images/cover.jpg) 
+  background-image: url(../images/cover.jpg);  
 }
 
 .slideshow li:nth-child(2) { 

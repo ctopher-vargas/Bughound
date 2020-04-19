@@ -6,12 +6,12 @@
     </div>
 </div>
 <div class="container">
-    <form action="/bugs/search?_method=POST" method="POST">
+    <form action="/bugs/search?_method=POST" method="POST" id="searchForm">
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="prog_id">program</label>
+                <label for="prog_id">Program</label>
                 <select class="custom-select mr-sm-2" onchange="dynamicArea()" id="prog_id" name="prog_id">
-                    <option value="" disabled selected>Choose...</option>
+                    <option value="0">Choose...</option>
                     <% programs.forEach(function(programs) { %>
                         <option value="<%= programs.prog_id %>"><%= programs.program %></option>
                     <% }); %>
@@ -22,7 +22,7 @@
             <div class="form-group col-md-3">
                 <label for="report_type">Report Type</label>
                 <select class="custom-select mr-sm-2" id="report_type" name="report_type">
-                    <option value="" disabled selected>ALL</option>
+                    <option value="0">ALL</option>
                     <option value="1">Coding Error</option>
                     <option value="2">Design Issue</option>
                     <option value="3">Suggestion</option>
@@ -36,7 +36,7 @@
             <div class="form-group col-md-3">
                 <label for="severity">Severity</label>
                 <select class="custom-select mr-sm-2" id="severity" name="severity">
-                    <option value="" disabled selected>ALL</option>
+                    <option value="0">ALL</option>
                     <option value="1">minor</option>
                     <option value="3">serious</option>
                     <option value="3">fatal</option>
@@ -45,9 +45,9 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="area_id">functional area</label>
+                <label for="area_id">Functional Area</label>
                 <select class="custom-select mr-sm-2" id="area_id" name="area_id">
-                    <option value="" disabled selected>Choose...</option>
+                    <option value="0">ALL</option>
                     <% areas.forEach(function(areas) { %>
                         <option value="<%= areas.area_id %>"><%= areas.area %></option>
                     <% }); %>
@@ -56,9 +56,9 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="assigned_to">assigned to</label>
+                <label for="assigned_to">Assigned To</label>
                 <select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
-                    <option value="" disabled selected>ALL</option>
+                    <option value="0">ALL</option>
                     <% users.forEach(function(users) { %>
                         <option value="<%= users.emp_id %>"><%= users.username %></option>
                     <% }); %>
@@ -67,9 +67,9 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="status">status</label>
+                <label for="status">Status</label>
                 <select class="custom-select mr-sm-2" id="status" name="status">
-                    <option value="" disabled selected>ALL</option>
+                    <option value="0">ALL</option>
                     <option value="1">open</option>
                     <option value="2">closed</option>
                 </select>
@@ -77,9 +77,9 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="priority">priority</label>
+                <label for="priority">Priority</label>
                 <select class="custom-select mr-sm-2" id="priority" name="priority">
-                    <option value="" disabled selected>ALL</option>
+                    <option value="0">ALL</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -92,7 +92,7 @@
             <div class="form-group col-md-3">
                 <label for="resolution">resolution</label>
                 <select class="custom-select mr-sm-2" id="resolution" name="resolution">
-                    <option value="" disabled selected>ALL</option>
+                    <option value="0">ALL</option>
                     <option value="1">pending</option>
                     <option value="2">fixed</option>
                     <option value="3">irresproducible</option>
@@ -108,7 +108,7 @@
         <div class="form-group row">
                 <div class="col-sm-10">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a class="btn btn btn-primary" role="button">Reset</a>
+                    <a class="btn btn btn-primary" role="button" onclick="clearForm()">Reset</a>
                     <a class="btn btn-danger" href="/home" role="button">Cancel</a>
                 </div>
             </div>
@@ -119,16 +119,27 @@
 <script>
     function dynamicArea() {
         var progid = document.getElementById("prog_id").value;
-        console.log(progid);
         document.getElementById("area_id").options.length = 0;
-        var count = 0;
-        <% areas.forEach(function(areas) { %>
-        if (<%= areas.prog_id %> == progid)
-        {
-            document.getElementById("area_id").options[count] = new Option('<%= areas.area %>', <%= areas.area_id %>);
-            count++;
+        document.getElementById("area_id").options[0] = new Option('ALL', 0); 
+        var count = 1; 
+        if(progid==0){
+            <% areas.forEach(function(areas) { %>
+                document.getElementById("area_id").options[count] = new Option('<%=areas.area%>', <%=areas.area_id%>);
+                count++;
+            <% }); %>
         }
+        else {
+            <% areas.forEach(function(areas) { %>
+            if(<%=areas.prog_id%> == progid) {
+                document.getElementById("area_id").options[count] = new Option('<%=areas.area%>', <%=areas.area_id%>); 
+                count++;
+            }
         <% }); %>
+        }
+    }
+
+    function clearForm() {
+        document.getElementById("searchForm").reset(); 
     }
 </script>
 
