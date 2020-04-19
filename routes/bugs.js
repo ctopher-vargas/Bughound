@@ -100,7 +100,6 @@ router.get('/search', function(req, res, next){
 						if (err) { throw err; }
 						else {
 							var program_count = Object.keys(programs).length;
-							console.log(program_count);
 							res.render('bugs/search', { programs: programs, users: users, areas: areas, program_count: program_count });
 						}
 					});
@@ -137,7 +136,9 @@ function constructSearchQuery(s){
 	let sql = '';
 	let sqlParams = [];
 	for (var key in s) {
-		if (s.hasOwnProperty(key)) {
+
+		if (s.hasOwnProperty(key) && s[key] != 0) {
+			console.log("field filled in from form" + s[key])
 			sql += " bugs." + key + " = ? AND";
 			sqlParams.push(s[key]);
 		}
