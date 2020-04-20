@@ -52,15 +52,65 @@ router.post('/', function(req, res, next){
     	if(err){throw err; }
     	else {
     		console.log(result);
-			req.flash("success", " bug successfully entered in the database")
+			req.flash("success", " bug successfully entered in the database");
 			res.redirect('/home')
     	}
     }); 
 });  
 
-router.get('/edit', function(req, res, next){
-	res.render('bugs/edit'); 
-}); 
+router.get('/edit/:bug_id', function(req, res, next){
+	let bugSql = "SELECT *, DATE_FORMAT(date, \"%Y-%m-%d\") AS date, DATE_FORMAT(resolved_date, \"%Y-%m-%d\") AS resolved_date, DATE_FORMAT(tested_date, \"%Y-%m-%d\") AS tested_date FROM bugs WHERE bug_id = ?;";
+	let areaSql = "SELECT areas.area, programs.program, areas.area_id FROM areas JOIN programs ON areas.prog_id = programs.prog_id WHERE areas.prog_id = ?;";
+	let userSql = "SELECT username, emp_id FROM employees;";
+
+
+	connection.query(bugSql, [req.params.bug_id], function (err, bugs) {
+		if (err){throw err;}
+		else{
+			connection.query(areaSql, [bugs[0].prog_id], function (err, areas) {
+
+				if (err){throw err;}
+				else{
+					connection.query(userSql, function (err, employees) {
+						res.render('bugs/edit', {program: areas[0].program, bug: bugs[0], areas: areas, users: employees});
+					});
+				}
+
+			});
+		}
+
+	});
+
+});
+
+router.put('/edit/:bug_id', function(req, res, next){
+
+	var reproducible = false;
+	if(req.body.reproducible){
+		reproducible = true;
+	}
+
+	let sql = "UPDATE bugs SET prog_id = ?, area_id = ?, report_type = ?, severity = ?, problem_summary = ?, reproducible = ?, problem = ?, " +
+		"suggested_fix = ?, reported_by = ?, date = ?, assigned_to = ?, comments = ?, status = ?, priority = ?, resolution = ?, " +
+		"resolution_version = ?, resolved_by = ?, resolved_date = ?, tested_by = ?, tested_date = ?, treat_as = ? WHERE bug_id = ?";
+	let sqlParams = [req.body.prog_id, req.body.area_id, req.body.report_type, req.body.severity,
+    					   req.body.problem_summary, reproducible, req.body.problem, req.body.suggested_fix,
+    					   req.body.reported_by, req.body.date, req.body.assigned_to, req.body.comments,
+    					   req.body.status, req.body.priority, req.body.resolution, req.body.resolution_version,
+    					   req.body.resolved_by, req.body.resolved_date, req.body.tested_by, req.body.tested_date, req.body.treat_as, req.params.bug_id];
+
+	connection.query(sql, sqlParams, function (err, result) {
+		if (err) { throw err; }
+		else{
+			console.log(result);
+			req.flash("success", " bug successfully updated in the database");
+			res.redirect('/home')
+		}
+
+
+	});
+
+});
 
 router.get('/search', function(req, res, next){
 
@@ -119,9 +169,9 @@ function constructSearchQuery(s){
 	}
 
 	if(sqlParams.length === 0)
-		sql =  "SELECT bugs.bug_id, programs.program, bugs.problem_summary from bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
+		sql =  "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
 	else{
-		sql = "SELECT bugs.bug_id, programs.program, bugs.problem_summary FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
+		sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
 		sql = sql.substring(0 , sql.length - 3);
 
 	}
