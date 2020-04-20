@@ -58,7 +58,7 @@ router.post('/', function(req, res, next){
     }); 
 });  
 
-router.get('/edit/:bug_id', function(req, res, next){
+router.get('/:bug_id', function(req, res, next){
 	let bugSql = "SELECT *, DATE_FORMAT(date, \"%Y-%m-%d\") AS date, DATE_FORMAT(resolved_date, \"%Y-%m-%d\") AS resolved_date, DATE_FORMAT(tested_date, \"%Y-%m-%d\") AS tested_date FROM bugs WHERE bug_id = ?;";
 	let areaSql = "SELECT areas.area, programs.program, areas.area_id FROM areas JOIN programs ON areas.prog_id = programs.prog_id WHERE areas.prog_id = ?;";
 	let userSql = "SELECT username, emp_id FROM employees;";
@@ -85,6 +85,29 @@ router.get('/edit/:bug_id', function(req, res, next){
 });
 
 router.put('/edit/:bug_id', function(req, res, next){
+
+	var reproducible = false;
+	if(req.body.reproducible){
+		reproducible = true;
+	}
+
+	let sql = "UPDATE bugs SET prog_id = ?, area_id = ?, report_type = ?, severity = ?, problem_summary = ?, reproducible = ?, problem = ?, " +
+		"suggested_fix = ?, reported_by = ?, date = ?, assigned_to = ?, comments = ?, status = ?, priority = ?, resolution = ?, " +
+		"resolution_version = ?, resolved_by = ?, resolved_date = ?, tested_by = ?, tested_date = ?, treat_as = ? WHERE bug_id = ?";
+	let sqlParams = [req.body.prog_id, req.body.area_id, req.body.report_type, req.body.severity,
+    					   req.body.problem_summary, reproducible, req.body.problem, req.body.suggested_fix,
+    					   req.body.reported_by, req.body.date, req.body.assigned_to, req.body.comments,
+    					   req.body.status, req.body.priority, req.body.resolution, req.body.resolution_version,
+    					   req.body.resolved_by, req.body.resolved_date, req.body.tested_by, req.body.tested_date, req.body.treat_as, req.params.bug_id];
+
+	connection.query(sql, sqlParams, function (err, result) {
+		if (err) { throw err; }
+		else{
+			console.log(result);
+		}
+
+
+	});
 
 });
 

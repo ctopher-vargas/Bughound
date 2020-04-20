@@ -17,7 +17,7 @@
             <% bugs.forEach(function(bug) { %>
                 <tr>
 
-                    <td><a href="/bugs/edit/<%= bug.bug_id %>"><%= bug.bug_id %></a></td>
+                    <td><a href="/bugs/<%= bug.bug_id %>"><%= bug.bug_id %></a></td>
                     <td><%= bug.program %></td>
                     <td><%= bug.problem_summary %></td>
                 </tr>
