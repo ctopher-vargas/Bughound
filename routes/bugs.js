@@ -58,7 +58,7 @@ router.post('/', function(req, res, next){
     }); 
 });  
 
-router.get('/:bug_id', function(req, res, next){
+router.get('/edit/:bug_id', function(req, res, next){
 	let bugSql = "SELECT *, DATE_FORMAT(date, \"%Y-%m-%d\") AS date, DATE_FORMAT(resolved_date, \"%Y-%m-%d\") AS resolved_date, DATE_FORMAT(tested_date, \"%Y-%m-%d\") AS tested_date FROM bugs WHERE bug_id = ?;";
 	let areaSql = "SELECT areas.area, programs.program, areas.area_id FROM areas JOIN programs ON areas.prog_id = programs.prog_id WHERE areas.prog_id = ?;";
 	let userSql = "SELECT username, emp_id FROM employees;";
@@ -67,7 +67,6 @@ router.get('/:bug_id', function(req, res, next){
 	connection.query(bugSql, [req.params.bug_id], function (err, bugs) {
 		if (err){throw err;}
 		else{
-			console.log(bugs[0].date);
 			connection.query(areaSql, [bugs[0].prog_id], function (err, areas) {
 
 				if (err){throw err;}
@@ -104,6 +103,8 @@ router.put('/edit/:bug_id', function(req, res, next){
 		if (err) { throw err; }
 		else{
 			console.log(result);
+			req.flash("success", " bug successfully updated in the database");
+			res.redirect('/home')
 		}
 
 
