@@ -167,7 +167,7 @@ router.post('/upload/:bug_id', fileUpload(),function(req, res) {
   let file = req.files.attach;
 
   // Use the mv() method to place the file somewhere on your server
-  file.mv('./temp/' + file.name, function(err) {
+  file.mv('./uploadedfiles/' + file.name, function(err) {
     if (err)
       return res.status(500).send(err);
 
