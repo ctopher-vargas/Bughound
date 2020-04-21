@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql'); 
-var connection = require('../db'); 
+var connection = require('../db');
+const fileUpload = require('express-fileupload');
+
 
 router.get('/', function(req, res, next) {
 	connection.query("SELECT bugs.bug_id, bugs.problem_summary, programs.program FROM bugs, programs WHERE bugs.prog_id = programs.prog_id;",
@@ -154,6 +156,24 @@ router.post('/search', function (req, res, next) {
 
 router.get('/delete', function(req, res, next){
 	res.render('bugs/delete'); 
+});
+
+router.post('/upload/:bug_id', fileUpload(),function(req, res) {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+  let file = req.files.attach;
+
+  // Use the mv() method to place the file somewhere on your server
+  file.mv('./temp/' + file.name, function(err) {
+    if (err)
+      return res.status(500).send(err);
+
+
+    res.send('File ' + file.name + ' has been uploaded!');
+  });
 });
 
 function constructSearchQuery(s){
