@@ -165,14 +165,22 @@ router.post('/upload/:bug_id', fileUpload(),function(req, res) {
 
   // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let file = req.files.attach;
+  let filePath = './uploadedfiles/' + file.name;
 
   // Use the mv() method to place the file somewhere on your server
   file.mv('./uploadedfiles/' + file.name, function(err) {
     if (err)
       return res.status(500).send(err);
+    connection.query("INSERT INTO bugupload(bug_id, filepath, filename) VALUES (?, ?, ?)", [req.params.bug_id, filePath, file.name],
+		function (err, result) {
+    	if (err) { throw err; }
+    	else{
+    		console.log(result);
+    		res.send('File ' + file.name + ' has been uploaded!');
+		}
 
+		});
 
-    res.send('File ' + file.name + ' has been uploaded!');
   });
 });
 
