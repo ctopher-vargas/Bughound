@@ -246,7 +246,7 @@ router.get('/file', function (req, res, next) {
     }
     else{
         console.log("file doesnt exist");
-        req.flash("error", " file doesnt exist");
+        res.status(204).send();
     }
 
 
