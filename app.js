@@ -16,6 +16,7 @@ var bugsRouter 		= require('./routes/bugs');
 var programsRouter 	= require('./routes/programs'); 
 var areasRouter 	= require('./routes/areas');
 
+
 var app = express();
 
 // view engine setup
@@ -55,6 +56,8 @@ app.use('/users', usersRouter);
 app.use('/bugs', bugsRouter); 
 app.use('/programs', programsRouter);
 app.use('/areas', areasRouter);
+
+
 
 app.get('*', function(req, res){
   res.sendFile(__dirname+'/public/views/error.ejs');
