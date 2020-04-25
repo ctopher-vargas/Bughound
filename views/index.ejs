@@ -2,17 +2,24 @@
 
 <div class="container">
   <div class="jumbotron shadow">
-    <h1>Welcom to <%=title%></h1>      
+    <h1>Welcome to <%=title%></h1>      
     <% if(currentUser) { %>
       <h6>User: <%= currentUser.username%></h6>
       <h6>UserLever: <%= currentUser.userlevel%></h6>
     <% } %>
   </div>
-  <a class="btn btn-primary" href="/bugs/new" role="button"><i class="fas fa-bug"></i>  Enter New Bug</a>
-  <a class="btn btn-primary" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a>
-  <% if(currentUser && currentUser.userlevel == 3 ) { %>
-    <a class="btn btn-primary" href="/dbmaintance" role="button"><i class="fas fa-database"></i>  Database Maintance</a>  
-  <% } %>
-</div>
+  <div class="row">
+    <div class="col-sm-12 col-md-4">
+      <a class="btn btn-primary" href="/bugs/new" role="button"><i class="fas fa-bug"></i>  Enter New Bug</a>
+    </div>
+    <div class="col-sm-12 col-md-4">
+      <a class="btn btn-primary" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a>
+    </div>
+    <% if(currentUser && currentUser.userlevel == 3 ) { %>
+      <div class="col-sm-12 col-md-4">
+            <a class="btn btn-primary" href="/dbmaintance" role="button"><i class="fas fa-database"></i>  Database Maintance</a> 
+      </div>
+    <% } %>
+  </div>
 
 <% include ./partials/footer %>
