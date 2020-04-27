@@ -1,11 +1,11 @@
 <% include ../partials/head %>
 
-    <div class="container">
+    <div class="container content_body">
         <div class="jumbotron">
             <h1>Bugs</h1>
         </div>
-        <table class="table">
-            <thead>
+       <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
             <tr>
                 <th>Bug Id</th>
                 <th>Program</th>
@@ -13,23 +13,17 @@
             </tr>
             </thead>
             <tbody>
+                <% bugs.forEach(function(bug) { %>
+                    <tr>
 
-            <% bugs.forEach(function(bug) { %>
-                <tr>
-
-                    <td><a href="/bugs/edit/<%= bug.bug_id %>"><%= bug.bug_id %></a></td>
-                    <td><%= bug.program %></td>
-                    <td><%= bug.problem_summary %></td>
-                </tr>
-            <% }); %>
-            <tr>
-                <td><a class="btn btn-danger" href="/home" role="button">Cancel</a></td>
-                <td></td>
-                <td></td>
-            </tr>
+                        <td><a href="/bugs/edit/<%= bug.bug_id %>"><%= bug.bug_id %></a></td>
+                        <td><%= bug.program %></td>
+                        <td><%= bug.problem_summary %></td>
+                    </tr>
+                <% }); %>        
             </tbody>
         </table>
-
+        <a class="btn btn-danger" href="/home" role="button">Cancel</a>
     </div>
 
 <% include ../partials/footer %>

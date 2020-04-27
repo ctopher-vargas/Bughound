@@ -1,6 +1,6 @@
 <% include ../partials/head %>
 
-	<div style="padding-bottom: 100px;" class="container">
+	<div class="container content_body">
 		<div class="jumbotron shadow">
 			<h1>Edit <%=user[0].name%></h1>
 		</div>	
@@ -45,9 +45,12 @@
                 </div>
             </div>
         </form>	
-        <form class="delete-form" action="/users/<%=user[0].emp_id%>?_method=DELETE" method="POST">
-            <button class="btn btn-danger">Delete</button>
-        </form>
+        <hr>
+        <div class="container">
+             <form class="delete-form" action="/users/<%=user[0].emp_id%>?_method=DELETE" method="POST">
+                <button class="btn btn-danger">Delete</button>
+            </form>
+        </div>
 	</div>
 
 <% include ../partials/footer %>

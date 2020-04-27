@@ -9,6 +9,14 @@ middlewareObj.isLoggedIn = function(req, res, next){
     res.redirect("/login"); 
 }
 
+middlewareObj.notLoggedIn = function(req, res, next){
+	 if(!req.isAuthenticated()){
+        return next(); 
+    } 
+    //req.flash('error', 'Please login');
+    res.redirect("/home"); 
+}
+
 middlewareObj.isAdmin = function(req, res, next){
 	if(req.isAuthenticated()){
 		if(req.user.userlevel == 3) {

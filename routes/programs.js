@@ -65,7 +65,7 @@ router.get('/edit/:program_id', middleWare.isLoggedIn, function(req, res, next){
 	connection.query('SELECT * FROM programs WHERE prog_id = ? ; ', req.params.program_id, function(err, results){
 		if(err) {throw err;}
 		else{
-			res.render('programs/show', {program: results}); 
+			res.render('programs/show', {program: results, method: ''}); 
 		}
 	}); 
 }); 

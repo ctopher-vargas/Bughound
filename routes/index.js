@@ -17,7 +17,7 @@ router.get('/dbmaintance', middleWare.isLoggedIn, middleWare.isAdmin, function(r
 	res.render('dbmaintance');
 }); 
 //login page
-router.get('/login', function(req, res, next){
+router.get('/login', middleWare.notLoggedIn, function(req, res, next){
 	res.render('login'); 
 }); 
 //login

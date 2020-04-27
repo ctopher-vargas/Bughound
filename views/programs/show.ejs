@@ -1,6 +1,6 @@
 <% include ../partials/head %>
 
-    <div class="container">
+    <div class="container content_body">
         <div class="jumbotron shadow">
              <h1>Edit <%=program[0].program%></h1>
         </div>
@@ -31,10 +31,12 @@
                     </div>
                 </div>
             </form>
-        
-            <form action="/programs/<%=program[0].prog_id%>?_method=DELETE" method="POST">  
-                <button class="btn btn-danger">Delete</button>
-            </form>
+           <hr>
+            <div class="container">
+                <form action="/programs/<%=program[0].prog_id%>?_method=DELETE" method="POST">  
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
     

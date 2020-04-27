@@ -2,17 +2,14 @@
 
     <% include ../partials/search %>
 
-    <div class="container">
-        <h3>Programs</h3>
-        <table class="table">
-          <thead>
+    <div class="container content_body">
+        <table class="table table-striped">
+          <thead class="thead-dark">
             <tr>
               <th>ID</th>
               <th>Program Name</th>
               <th>Release</th>
               <th>Version</th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -26,6 +23,7 @@
             <% }); %>
           </tbody>
         </table>
-    <div class="container">
+        <a class="btn btn-danger" href="/dbmaintance" role="button">Cancel</a>
+    </div>
 
 <% include ../partials/footer %>
