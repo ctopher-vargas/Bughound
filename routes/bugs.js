@@ -229,7 +229,7 @@ router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn, function (re
                     throw err;
                 } else {
                     console.log(result);
-                    res.send('File ' + file.name + ' has been uploaded!');
+                    res.redirect('/bugs/edit/'+req.params.bug_id);
                 }
 
             });
