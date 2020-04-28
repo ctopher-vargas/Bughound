@@ -1,0 +1,15 @@
+Data Division
+
+Working-Storage Section
+
+01	ID3V1.
+
+	05 TAG			PIC X(3) VALUE 'id3'.
+	05 Song-Title		PIC X(30).
+	05 Artist			PIC X(30).
+	05 Album		PIC X(30).
+	05 Year			PICA(4).
+	05 Comment		PIC X(30).
+	05 Genre 		PIC A(1).
+
+	

@@ -4,9 +4,10 @@ var mysql = require('mysql');
 var connection = require('../db');
 const fileUpload = require('express-fileupload');
 const fs = require("fs");
+var middleWare = require('../middleware/index.js');
 
 
-router.get('/', function (req, res, next) {
+router.get('/', middleWare.isLoggedIn, function (req, res, next) {
     connection.query("SELECT bugs.bug_id, bugs.problem_summary, programs.program FROM bugs, programs WHERE bugs.prog_id = programs.prog_id;",
         function (err, results) {
             if (err) {
@@ -19,7 +20,7 @@ router.get('/', function (req, res, next) {
 
 });
 
-router.get('/new', function (req, res, next) {
+router.get('/new', middleWare.isLoggedIn, function (req, res, next) {
     connection.query("SELECT prog_id, program, program_version FROM programs;", function (err, programs) {
         if (err) {
             throw err;
@@ -47,7 +48,7 @@ router.get('/new', function (req, res, next) {
     });
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', middleWare.isLoggedIn, function (req, res, next) {
     var sql = 'INSERT INTO bugs(prog_id, area_id, report_type, severity, problem_summary, reproducible, problem,' +
         'suggested_fix, reported_by, date, assigned_to, comments, status, priority, resolution,' +
         'resolution_version, resolved_by, resolved_date, tested_by, tested_date, treat_as) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
@@ -71,10 +72,11 @@ router.post('/', function (req, res, next) {
     });
 });
 
-router.get('/edit/:bug_id', function (req, res, next) {
+router.get('/edit/:bug_id', middleWare.isLoggedIn, function (req, res, next) {
     let bugSql = "SELECT *, DATE_FORMAT(date, \"%Y-%m-%d\") AS date, DATE_FORMAT(resolved_date, \"%Y-%m-%d\") AS resolved_date, DATE_FORMAT(tested_date, \"%Y-%m-%d\") AS tested_date FROM bugs WHERE bug_id = ?;";
     let areaSql = "SELECT areas.area, programs.program, areas.area_id FROM areas JOIN programs ON areas.prog_id = programs.prog_id WHERE areas.prog_id = ?;";
     let userSql = "SELECT username, emp_id FROM employees;";
+    let programVersionSql = "SELECT DISTINCT program_version FROM programs WHERE program = ? ORDER BY program_version ASC;";
 
 
     connection.query(bugSql, [req.params.bug_id], function (err, bugs) {
@@ -95,14 +97,21 @@ router.get('/edit/:bug_id', function (req, res, next) {
                                     if (err) {
                                         throw err;
                                     } else {
+                                        connection.query(programVersionSql, [areas[0].program], function (err, versions) {
+                                            if (err) {
+                                                throw err;
+                                            } else {
+                                                console.log(versions);
+                                                res.render('bugs/edit', {
+                                                    program: areas[0].program,
+                                                    bug: bugs[0],
+                                                    areas: areas,
+                                                    users: employees,
+                                                    files: files,
+                                                    versions: versions
+                                                });
+                                            }
 
-                                    	console.log(files);
-                                        res.render('bugs/edit', {
-                                            program: areas[0].program,
-                                            bug: bugs[0],
-                                            areas: areas,
-                                            users: employees,
-											files: files
                                         });
 
                                     }
@@ -118,7 +127,7 @@ router.get('/edit/:bug_id', function (req, res, next) {
 
 });
 
-router.put('/edit/:bug_id', function (req, res, next) {
+router.put('/edit/:bug_id', middleWare.isLoggedIn, function (req, res, next) {
 
     var reproducible = false;
     if (req.body.reproducible) {
@@ -148,7 +157,7 @@ router.put('/edit/:bug_id', function (req, res, next) {
 
 });
 
-router.get('/search', function (req, res, next) {
+router.get('/search', middleWare.isLoggedIn, function (req, res, next) {
 
     connection.query("SELECT prog_id, program FROM programs;", function (err, programs) {
         if (err) {
@@ -177,7 +186,7 @@ router.get('/search', function (req, res, next) {
     });
 });
 
-router.post('/search', function (req, res, next) {
+router.post('/search', middleWare.isLoggedIn, function (req, res, next) {
 
     let s = JSON.parse(JSON.stringify(req.body));
 
@@ -201,7 +210,7 @@ router.get('/delete', function (req, res, next) {
     res.render('bugs/delete');
 });
 
-router.post('/upload/:bug_id', fileUpload(), function (req, res) {
+router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn, function (req, res) {
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
     }
@@ -228,23 +237,22 @@ router.post('/upload/:bug_id', fileUpload(), function (req, res) {
     });
 });
 
-router.get('/file', function (req, res, next) {
+router.get('/file', middleWare.isLoggedIn, function (req, res, next) {
 
     let path = './uploadedfiles/' + req.query.file;
     if (fs.existsSync(path)) {
 
         res.download(path, function (err, data) {
-        if (err) {
-            throw err;
-        } else {
-            console.log(path);
+            if (err) {
+                throw err;
+            } else {
+                console.log(path);
 
-        }
+            }
 
-    });
+        });
 
-    }
-    else{
+    } else {
         console.log("file doesnt exist");
         res.status(204).send();
     }

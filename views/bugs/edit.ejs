@@ -8,12 +8,8 @@
 </div>
 <div class="container content_body">
     <form action="/bugs/edit/<%= bug.bug_id %>?_method=PUT" method="POST">
+        <input type="hidden" id="prog_id" name="prog_id" value="<%= bug.prog_id %>">
         <div class="form-row">
-            <!-- <div class="form-group col-md-3">
-                <label for="prog_id"><b><%= program %></b></label>
-                <input type="hidden" id="prog_id" name="prog_id" value="<%= bug.prog_id %>">
-
-            </div> -->
             <div class="form-group col-md-3">
                 <label for="report_type">Report Type</label>
                 <select class="custom-select mr-sm-2" id="report_type" name="report_type" required>
@@ -170,16 +166,10 @@
             <div class="form-group col-md-3">
                 <label for="resolution_version">resolution version <%= bug.resolution_version %></label>
                 <select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
-                    <%
-                    var r_v = [1, 2, 3];
-                    for (let i = 0; i < r_v.length; i++ )
-                    {
-                        selected = (bug.resolution_version == r_v[i]) ? "selected" : "";
-                    %>
-                    <option value="<%= r_v[i] %>" <%= selected %>><%= r_v[i] %></option>
-                    <%
-                    }
-                    %>
+                    <% versions.forEach(function(version) { %>
+                        <% selected = (version.program_version == bug.resolution_version) ? "selected" : ""; %>
+                        <option value="<%= version.program_version %>"<%= selected %>><%= version.program_version %></option>
+                    <% }); %>
                 </select>
             </div>
         </div>
