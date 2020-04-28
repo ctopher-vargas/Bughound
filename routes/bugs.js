@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/new', function (req, res, next) {
-    connection.query("SELECT prog_id, program FROM programs;", function (err, programs) {
+    connection.query("SELECT prog_id, program, program_version FROM programs;", function (err, programs) {
         if (err) {
             throw err;
         } else {

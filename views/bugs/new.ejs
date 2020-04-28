@@ -10,7 +10,7 @@
 			<div class="form-row">	
     			<div class="form-group col-md-3">
     				<label for="prog_id">Program</label>
-    				<select class="custom-select mr-sm-2" onchange="dynamicArea()" id="prog_id" name="prog_id" required>
+    				<select class="custom-select mr-sm-2" id="prog_id" name="prog_id" onchange="dynamicForm(this);" required>
     					<option value="">--</option>
     					 <% programs.forEach(function(programs) { %>
     					 	<option value="<%=programs.prog_id%>"><%=programs.program%></option>
@@ -85,9 +85,9 @@
 					<label for="area_id">Functional Area</label>
 					<select class="custom-select mr-sm-2"  id="area_id" name="area_id">
 						<option value="">--</option>
-						<!-- 	<% areas.forEach(function(areas) { %>
+						<% areas.forEach(function(areas) { %>
 									<option value="<%=areas.area_id%>"><%=areas.area%></option>
-						    <% }); %>  -->
+						    <% }); %> 
 					</select>
 				</div>
 				<div class="form-group col-md-3">
@@ -201,23 +201,50 @@
     	</form>
     </div>
    
-   <script>
-   		function dynamicArea() {
-			var progid = document.getElementById("prog_id").value;
-			console.log(progid);
-			document.getElementById("area_id").options.length = 0;
+   <script type="text/javascript">
+   		function dynamicForm(element) {
+   			// clear previous area field and resolution field
+   			clearAreaResolution(); 
+			//adding areas specific to program
+			var progid = element.options[element.selectedIndex].value; 
 			var count = 1; 
-			document.getElementById("area_id").options[0] = new Option('--'); 
 			<% areas.forEach(function(areas) { %>
 				if(<%=areas.prog_id%> == progid) {
 					document.getElementById("area_id").options[count] = new Option('<%=areas.area%>', <%=areas.area_id%>); 
 					count++;
 				}
 			<% }); %>
+			//adding resolution version specific to program
+			var prog_name = element.options[element.selectedIndex].text;
+			var res_version = [];  
+			<% programs.forEach(function(programs){ %>
+				//make sure program names match
+				if('<%=programs.program%>' == prog_name) {
+					//makes sure not to add duplicate versions
+					if(!res_version.includes(<%=programs.program_version%>)) {
+						res_version.push(<%=programs.program_version%>);
+					}		
+				}	
+			<% }); %>
+			//sort versions
+			res_version.sort(); 
+			count = 1; 
+			res_version.forEach(function(version){
+				document.getElementById("resolution_version").options[count] = new Option(version, version); 
+				count++; 
+			});
+		}
+
+		function clearAreaResolution(){
+			document.getElementById("area_id").options.length = 0;
+			document.getElementById("area_id").options[0] = new Option('--'); 
+			document.getElementById("resolution_version").options.length = 0;
+			document.getElementById("resolution_version").options[0] = new Option('--');
 		}
 
 		function clearForm() {
 			document.getElementById("bugForm").reset(); 
+			clearAreaResolution(); 
 		}
    </script>
     
