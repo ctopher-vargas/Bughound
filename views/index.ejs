@@ -9,7 +9,9 @@
     <% } %>
   </div>
     <a class="btn btn-primary" href="/bugs/new" role="button"><i class="fas fa-bug"></i>  Enter New Bug</a>
-    <a class="btn btn-primary" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a> 
+  <% if(currentUser && currentUser.userlevel > 1) { %>
+    <a class="btn btn-primary" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a>
+    <% } %>
     <% if(currentUser && currentUser.userlevel == 3 ) { %>
       <a class="btn btn-primary" href="/dbmaintance" role="button"><i class="fas fa-database"></i>  Database Maintance</a> 
     <% } %>
