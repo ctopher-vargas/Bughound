@@ -72,7 +72,7 @@ router.post('/', middleWare.isLoggedIn, function (req, res, next) {
     });
 });
 
-router.get('/edit/:bug_id', middleWare.isLoggedIn, function (req, res, next) {
+router.get('/edit/:bug_id', middleWare.isLoggedIn2up, function (req, res, next) {
     let bugSql = "SELECT *, DATE_FORMAT(date, \"%Y-%m-%d\") AS date, DATE_FORMAT(resolved_date, \"%Y-%m-%d\") AS resolved_date, DATE_FORMAT(tested_date, \"%Y-%m-%d\") AS tested_date FROM bugs WHERE bug_id = ?;";
     let areaSql = "SELECT areas.area, programs.program, areas.area_id FROM areas JOIN programs ON areas.prog_id = programs.prog_id WHERE areas.prog_id = ?;";
     let userSql = "SELECT username, emp_id FROM employees;";
@@ -127,7 +127,7 @@ router.get('/edit/:bug_id', middleWare.isLoggedIn, function (req, res, next) {
 
 });
 
-router.put('/edit/:bug_id', middleWare.isLoggedIn, function (req, res, next) {
+router.put('/edit/:bug_id', middleWare.isLoggedIn2up, function (req, res, next) {
 
     var reproducible = false;
     if (req.body.reproducible) {
@@ -210,7 +210,7 @@ router.get('/delete', function (req, res, next) {
     res.render('bugs/delete');
 });
 
-router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn, function (req, res) {
+router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn2up, function (req, res) {
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
     }
@@ -237,7 +237,7 @@ router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn, function (re
     });
 });
 
-router.get('/file', middleWare.isLoggedIn, function (req, res, next) {
+router.get('/file', middleWare.isLoggedIn2up, function (req, res, next) {
 
     let path = './uploadedfiles/' + req.query.file;
     if (fs.existsSync(path)) {

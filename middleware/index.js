@@ -7,7 +7,7 @@ middlewareObj.isLoggedIn = function(req, res, next){
     } 
     req.flash('error', 'Please login');
     res.redirect("/login"); 
-}
+};
 
 middlewareObj.notLoggedIn = function(req, res, next){
 	 if(!req.isAuthenticated()){
@@ -15,7 +15,15 @@ middlewareObj.notLoggedIn = function(req, res, next){
     } 
     //req.flash('error', 'Please login');
     res.redirect("/home"); 
-}
+};
+
+middlewareObj.isLoggedIn2up = function(req, res, next){
+    if(req.isAuthenticated() && req.user.userlevel > 1){
+        return next();
+    } else {
+		req.flash('error', 'Not authorized');
+	}
+};
 
 middlewareObj.isAdmin = function(req, res, next){
 	if(req.isAuthenticated()){
@@ -27,6 +35,6 @@ middlewareObj.isAdmin = function(req, res, next){
 			res.redirect("back"); 
 		}
 	}
-}
+};
 
 module.exports = middlewareObj; 
