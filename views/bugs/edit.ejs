@@ -54,8 +54,10 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3" style="padding-left: 25px">
-                <input type="checkbox" class="form-check-input" id="reproducible" name="reproducible" value="1">
-                <label for="reproducible" class="form-check-label">Reproducible</label>
+                <% var checked = (bug.reproducible == 1) ? "checked" : ""; %>
+                <input type="checkbox" class="form-check-input" id="reproducible" name="reproducible" <%=checked%>>
+
+                <label for="reproducible" class="form-check-label">Reproducible</label><%=bug.reproducible%>
             </div>
         </div>
         <div class="form-row">
@@ -93,14 +95,17 @@
             <div class="form-group col-md-3">
                 <label for="area_id">functional area</label>
                 <select class="custom-select mr-sm-2" id="area_id" name="area_id">
+                    <option value="" selected>--</option>
                     <% areas.forEach(function(areas) { %>
-                        <option value="<%= areas.area_id %>"><%= areas.area %></option>
+                        <% selected = (bug.area_id == areas.area_id) ? "selected" : ""; %>
+                        <option value="<%= areas.area_id %>"<%= selected %>><%= areas.area %></option>
                     <% }); %>
                 </select>
             </div>
             <div class="form-group col-md-3">
                 <label for="assigned_to">assigned to</label>
                 <select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
+                    <option value="">--</option>
                     <% users.forEach(function(users) { %>
                         <% selected = (users.emp_id == bug.assigned_to) ? "selected" : ""; %>
                         <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
@@ -133,6 +138,7 @@
             <div class="form-group col-md-3">
                 <label for="priority">priority</label>
                 <select class="custom-select mr-sm-2" id="priority" name="priority">
+                    <option value="" selected>--</option>
                     <%
                     var priority = [1, 2, 3, 4, 5];
                     for (let i = 0; i < priority.length; i++ )
@@ -150,6 +156,7 @@
             <div class="form-group col-md-3">
                 <label for="resolution">resolution</label>
                 <select class="custom-select mr-sm-2" id="resolution" name="resolution">
+                    <option value="" selected>--</option>
                     <%
                     var resolutions = ["pending", "fixed", "irresproducible", "deferred", "as designed", "can't be fixed",
                         "withdrawn by reporter", "need more info", "disagree with suggestion"];
@@ -166,6 +173,7 @@
             <div class="form-group col-md-3">
                 <label for="resolution_version">resolution version <%= bug.resolution_version %></label>
                 <select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
+                    <option value="" selected>--</option>
                     <% versions.forEach(function(version) { %>
                         <% selected = (version.program_version == bug.resolution_version) ? "selected" : ""; %>
                         <option value="<%= version.program_version %>"<%= selected %>><%= version.program_version %></option>
@@ -194,8 +202,8 @@
             <div class="form-group col-md-3">
                 <label for="tested_by">tested by</label>
                 <select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
-                    <
-                    <option value="">--</option>
+
+                    <option value="" selected>--</option>
                     <% users.forEach(function(users) { %>
                         <% selected = (users.emp_id == bug.tested_by) ? "selected" : ""; %>
                         <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
@@ -212,6 +220,7 @@
             <div class="form-group col-md-3">
                 <label for="treat_as">treat as?</label>
                 <select class="custom-select mr-sm-2" id="treat_as" name="treat_as">
+                    <option value="" selected>--</option>
                     <%
                     var options = ["Yes", "No"];
                     for (let i = 0; i < options.length; i++ )
