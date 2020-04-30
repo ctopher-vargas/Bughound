@@ -67,13 +67,7 @@
                           required><%= bug.problem %></textarea>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-9">
-                <label for="suggested_fix">Suggested Fix</label>
-                <textarea class="form-control" id="suggested_fix" name="suggested_fix" rows="5"
-                          required><%= bug.suggested_fix %></textarea>
-            </div>
-        </div>
+        
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label for="reported_by">Reported By</label>
@@ -111,6 +105,13 @@
                         <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
                     <% }); %>
                 </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="suggested_fix">Suggested Fix</label>
+                <textarea class="form-control" id="suggested_fix" name="suggested_fix" rows="5"
+                          required><%= bug.suggested_fix %></textarea>
             </div>
         </div>
         <div class="form-row">

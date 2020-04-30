@@ -50,8 +50,8 @@ router.get('/new', middleWare.isLoggedIn, function (req, res, next) {
 
 router.post('/', middleWare.isLoggedIn, function (req, res, next) {
     var sql = 'INSERT INTO bugs(prog_id, report_type, severity, problem_summary, reproducible, problem,' +
-        'suggested_fix, reported_by, date, area_id, assigned_to, comments, status, priority, resolution,' +
-        'resolution_version, resolved_by, resolved_date, tested_by, tested_date, treat_as) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        'reported_by, date, area_id, assigned_to, comments, status, priority, resolution,' +
+        'resolution_version, resolved_by, resolved_date, tested_by, tested_date, treat_as) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     var reproducible = false;
     if (req.body.reproducible) {
         reproducible = true;
@@ -152,7 +152,7 @@ router.put('/edit/:bug_id', middleWare.isLoggedIn2up, function (req, res, next) 
 
     var reproducible = false;
     let sql = "UPDATE bugs SET prog_id = ?, report_type = ?, severity = ?, problem_summary = ?, reproducible = ?, problem = ?, " +
-        "suggested_fix = ?, reported_by = ?, date = ?, area_id = ?, assigned_to = ?, comments = ?, status = ?, priority = ?, resolution = ?, " +
+        "reported_by = ?, date = ?, area_id = ?, assigned_to = ?, suggested_fix = ?, comments = ?, status = ?, priority = ?, resolution = ?, " +
         "resolution_version = ?, resolved_by = ?, resolved_date = ?, tested_by = ?, tested_date = ?, treat_as = ? WHERE bug_id = ?";
 
     if (req.body.reproducible) {
