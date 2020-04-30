@@ -67,9 +67,19 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
+                <label for="reported_by">Reported By</label>
+                <select class="custom-select mr-sm-2" id="reported_by" name="reported_by">
+                    <option value="0">ALL</option>
+                    <% users.forEach(function(users) { %>
+                        <option value="<%= users.emp_id %>"><%= users.username %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
                 <label for="status">Status</label>
                 <select class="custom-select mr-sm-2" id="status" name="status">
-                    <option value="0">ALL</option>
                     <option value="1">open</option>
                     <option value="2">closed</option>
                 </select>
