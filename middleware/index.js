@@ -16,15 +16,21 @@ middlewareObj.notLoggedIn = function(req, res, next){
     //req.flash('error', 'Please login');
     res.redirect("/home"); 
 };
-
+//checks to see if user is level 2 or higher
 middlewareObj.isLoggedIn2up = function(req, res, next){
-    if(req.isAuthenticated() && req.user.userlevel > 1){
-        return next();
-    } else {
-		req.flash('error', 'Not authorized');
+    if(req.isAuthenticated()) {
+    	if(req.user.userlevel > 1){
+        	return next();
+    	}
+        else {
+			req.flash('error', 'Not Authorized');
+			res.redirect("/home");
+		}
 	}
+	req.flash('error', 'Please login');
+    res.redirect("/login"); 
 };
-
+//checks to see if user is admin
 middlewareObj.isAdmin = function(req, res, next){
 	if(req.isAuthenticated()){
 		if(req.user.userlevel == 3) {
@@ -32,7 +38,7 @@ middlewareObj.isAdmin = function(req, res, next){
 		}
 		else {
 			req.flash('error', 'Must be an Admin'); 
-			res.redirect("back"); 
+			res.redirect("/home"); 
 		}
 	}
 };

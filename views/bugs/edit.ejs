@@ -3,7 +3,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1>Edit Bug ID #<%= bug.bug_id%></h1>
-        <p>Program Name: <%=program%></p>
+        <p>Program Name: <%=program%> - #<%=bug.prog_id%></p>
     </div>
 </div>
 <div class="container content_body">
@@ -32,7 +32,7 @@
                 <select class="custom-select mr-sm-2" id="severity" name="severity" required>
 
                     <%
-                    var severity = ["minor", "serious", "fatal"];
+                    var severity = ["Minor", "Serious", "Fatal"];
                     for (let i = 0; i < severity.length; i++ )
                     {
                         selected = (bug.severity == i + 1) ? "selected" : "";
@@ -47,7 +47,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-9">
-                <label for="problem_summary">problem summary</label>
+                <label for="problem_summary">Problem Summary</label>
                 <input type="text" value="<%= bug.problem_summary %>" class="form-control" id="problem_summary"
                        name="problem_summary" required>
             </div>
@@ -57,7 +57,7 @@
                 <% var checked = (bug.reproducible == 1) ? "checked" : ""; %>
                 <input type="checkbox" class="form-check-input" id="reproducible" name="reproducible" <%=checked%>>
 
-                <label for="reproducible" class="form-check-label">Reproducible</label><%=bug.reproducible%>
+                <label for="reproducible" class="form-check-label">Reproducible</label>
             </div>
         </div>
         <div class="form-row">
@@ -76,7 +76,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="reported_by">reported by</label>
+                <label for="reported_by">Reported By</label>
                 <select class="custom-select mr-sm-2" id="reported_by" name="reported_by" required>
                     <% users.forEach(function(users) { %>
                         <% selected = (users.emp_id == bug.reported_by) ? "selected" : ""; %>
@@ -85,7 +85,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="date">date</label>
+                <label for="date">Date</label>
                 <input type="date" class="form-control" value="<%= bug.date %>" id="date" name="date" required>
             </div>
         </div>
@@ -93,7 +93,7 @@
         <!-- items below are optional -->
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="area_id">functional area</label>
+                <label for="area_id">Functional Area</label>
                 <select class="custom-select mr-sm-2" id="area_id" name="area_id">
                     <option value="" selected>--</option>
                     <% areas.forEach(function(areas) { %>
@@ -103,7 +103,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="assigned_to">assigned to</label>
+                <label for="assigned_to">Assigned To</label>
                 <select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
                     <option value="">--</option>
                     <% users.forEach(function(users) { %>
@@ -115,16 +115,16 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-9">
-                <label for="comments">comments</label>
+                <label for="comments">Comments</label>
                 <textarea class="form-control" id="comments" name="comments" rows="5"><%= bug.comments %></textarea>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="status">status</label>
+                <label for="status">Status</label>
                 <select class="custom-select mr-sm-2" id="status" name="status">
                     <%
-                    var status = ["open", "closed"];
+                    var status = ["Open", "Closed"];
                     for (let i = 0; i < status.length; i++ )
                     {
                         selected = (bug.status == i + 1) ? "selected" : "";
@@ -136,7 +136,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="priority">priority</label>
+                <label for="priority">Priority</label>
                 <select class="custom-select mr-sm-2" id="priority" name="priority">
                     <option value="" selected>--</option>
                     <%
@@ -154,12 +154,12 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="resolution">resolution</label>
+                <label for="resolution">Resolution</label>
                 <select class="custom-select mr-sm-2" id="resolution" name="resolution">
                     <option value="" selected>--</option>
                     <%
-                    var resolutions = ["pending", "fixed", "irresproducible", "deferred", "as designed", "can't be fixed",
-                        "withdrawn by reporter", "need more info", "disagree with suggestion"];
+                    var resolutions = ["Pending", "Fixed", "Irresproducible", "Deferred", "As Designed", "Can't Be Fixed",
+                        "Withdrawn By Reporter", "Need More Info", "Disagree With Suggestion"];
                     for (let i = 0; i < resolutions.length; i++ )
                     {
                         selected = (bug.resolution == i + 1) ? "selected" : "";
@@ -171,7 +171,7 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="resolution_version">resolution version <%= bug.resolution_version %></label>
+                <label for="resolution_version">Resolution Version <%= bug.resolution_version %></label>
                 <select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
                     <option value="" selected>--</option>
                     <% versions.forEach(function(version) { %>
@@ -183,7 +183,7 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="resolved_by">resolved by</label>
+                <label for="resolved_by">Resolved By</label>
                 <select class="custom-select mr-sm-2" id="resolved_by" name="resolved_by">
                     <option value="">--</option>
                     <% users.forEach(function(users) { %>
@@ -193,14 +193,14 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="resolved_date">resolved date</label>
+                <label for="resolved_date">Resolved Date</label>
                 <input type="date" class="form-control" value="<%= bug.resolved_date %>" id="resolved_date"
                        name="resolved_date">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="tested_by">tested by</label>
+                <label for="tested_by">Tested By</label>
                 <select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
 
                     <option value="" selected>--</option>
@@ -211,14 +211,14 @@
                 </select>
             </div>
             <div class="form-group col-md-3">
-                <label for="tested_date">tested date</label>
+                <label for="tested_date">Tested Date</label>
                 <input type="date" class="form-control" value="<%= bug.tested_date %>" id="tested_date"
                        name="tested_date">
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="treat_as">treat as?</label>
+                <label for="treat_as">Treat As?</label>
                 <select class="custom-select mr-sm-2" id="treat_as" name="treat_as">
                     <option value="" selected>--</option>
                     <%
@@ -236,14 +236,15 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Save</button>
-                <a class="btn btn-danger" href="/home" role="button">Cancel</a>
+                <button type="submit" class="btn btn-success">Save</button>
+                <a class="btn btn-danger" onclick="goBack()" role="button">Cancel</a>
             </div>
         </div>
     </form>
+    <hr>
     <form id="attfile" action="/bugs/file" method="get">
         <div class="form-row">
-            <div class="form-group col-sm-12">
+            <div class="form-group col-sm-9">
                 <label for="file">Attachments</label>
                 <select class="custom-select mr-sm-2" id="file" name="file">
                     <% files.forEach(function(file) { %>
@@ -252,21 +253,28 @@
 
                     <% }); %>
                 </select>
+            </div>
+        </div>
+         <div class="form-group row">
+            <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Open</button>
             </div>
         </div>
     </form>
-
+    <hr>
     <form action="/bugs/upload/<%= bug.bug_id %>" method="POST" encType="multipart/form-data">
-
-        <div class="form-group custom-file col-md-8">
-
-            <input name="attach" type="file" class="custom-file-input" onchange="setFile()" id="attachment">
-            <label id="fileLabel" class="custom-file-label" for="attachment">Choose file</label>
-            <button type="submit" class="btn btn-primary">Save Attachment</button>
-
+        <div class="form-row">
+            <div class="form-group custom-file col-md-9">
+                <input name="attach" type="file" class="custom-file-input" onchange="setFile()" id="attachment">
+                <label id="fileLabel" class="custom-file-label" for="attachment">Choose file</label>
+            </div>
         </div>
-
+        <br>
+         <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Save Attachment</button>
+            </div>
+        </div>
     </form>
 </div>
 

@@ -201,7 +201,7 @@ router.put('/edit/:bug_id', middleWare.isLoggedIn2up, function (req, res, next) 
 
 });
 
-router.get('/search', middleWare.isLoggedIn, function (req, res, next) {
+router.get('/search', middleWare.isLoggedIn2up, function (req, res, next) {
 
     connection.query("SELECT prog_id, program FROM programs;", function (err, programs) {
         if (err) {

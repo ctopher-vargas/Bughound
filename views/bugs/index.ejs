@@ -1,8 +1,9 @@
 <% include ../partials/head %>
 
     <div class="container content_body">
-        <div class="jumbotron">
+        <div class="jumbotron shadow">
             <h1>Bugs</h1>
+            <p>Your search results.</p>
         </div>
        <table class="table table-striped table-bordered">
           <thead class="thead-dark">
@@ -23,7 +24,7 @@
                 <% }); %>        
             </tbody>
         </table>
-        <a class="btn btn-danger" href="/home" role="button">Cancel</a>
+        <a class="btn btn-danger" onclick="goBack()" role="button">Cancel</a>
     </div>
 
 <% include ../partials/footer %>

@@ -14,7 +14,7 @@
     				<select class="custom-select mr-sm-2" id="prog_id" name="prog_id" onchange="dynamicForm(this);" required>
     					<option value="">--</option>
     					 <% programs.forEach(function(programs) { %>
-    					 	<option value="<%=programs.prog_id%>"><%=programs.program%></option>
+    					 	<option value="<%=programs.prog_id%>"><%=programs.program%> : #<%=programs.prog_id%></option>
     					 <% }); %>
     				</select>
     			</div>
@@ -34,9 +34,9 @@
 					<label for="severity">Severity</label> 
 					<select class="custom-select mr-sm-2" id="severity" name="severity" required>
 						<option value="">--</option>
-						<option value="1">minor</option>
-						<option value="3">serious</option>
-						<option value="3">fatal</option>
+						<option value="1">Minor</option>
+						<option value="3">Serious</option>
+						<option value="3">Fatal</option>
 					</select>
 				</div>
 			</div>		

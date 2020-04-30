@@ -13,8 +13,8 @@ router.get('/home', middleWare.isLoggedIn, function(req, res, next){
 	res.render('index', { title: 'Bughound'});
 });
 //database maintance page
-router.get('/dbmaintance', middleWare.isLoggedIn, middleWare.isAdmin, function(req, res, next){
-	res.render('dbmaintance');
+router.get('/dbmaintenance', middleWare.isLoggedIn, middleWare.isAdmin, function(req, res, next){
+	res.render('dbmaintenance');
 }); 
 //login page
 router.get('/login', middleWare.notLoggedIn, function(req, res, next){
