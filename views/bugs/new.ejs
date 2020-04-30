@@ -1,3 +1,4 @@
+  
 <% include ../partials/head %> 
 
   	<div class="container">
@@ -228,14 +229,12 @@
 				count++; 
 			});
 		}
-
 		function clearAreaResolution(){
 			document.getElementById("area_id").options.length = 0;
-			document.getElementById("area_id").options[0] = new Option('--'); 
+			document.getElementById("area_id").options[0] = new Option('--', ''); 
 			document.getElementById("resolution_version").options.length = 0;
-			document.getElementById("resolution_version").options[0] = new Option('--');
+			document.getElementById("resolution_version").options[0] = new Option('--', '');
 		}
-
 		function clearForm() {
 			document.getElementById("bugForm").reset(); 
 			clearAreaResolution(); 

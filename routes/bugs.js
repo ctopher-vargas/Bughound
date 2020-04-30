@@ -49,19 +49,36 @@ router.get('/new', middleWare.isLoggedIn, function (req, res, next) {
 });
 
 router.post('/', middleWare.isLoggedIn, function (req, res, next) {
-    var sql = 'INSERT INTO bugs(prog_id, area_id, report_type, severity, problem_summary, reproducible, problem,' +
-        'suggested_fix, reported_by, date, assigned_to, comments, status, priority, resolution,' +
-        'resolution_version, resolved_by, resolved_date, tested_by, tested_date, treat_as) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    var reproducible = false;
+    var sql = 'INSERT INTO bugs(prog_id, report_type, severity, problem_summary, reproducible, problem,' +
+       'suggested_fix, reported_by, date, area_id, assigned_to, comments, status, priority, resolution,' +
+       'resolution_version, resolved_by, resolved_date, tested_by, tested_date, treat_as) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+    let s = JSON.parse(JSON.stringify(req.body));
+
+    let sqlParams = [];
+
+    for (var key in s) {
+
+        if (s.hasOwnProperty(key)) {
+            console.log("field filled in from form" + s[key]);
+            if(s[key] === '' || s[key] === '--')
+                sqlParams.push(null);
+            else{
+                sqlParams.push(s[key]);
+            }
+        }
+    }
+    var reproducible = false; 
     if (req.body.reproducible) {
         reproducible = true;
+        sqlParams[4] = reproducible; 
     }
-
-    connection.query(sql, [req.body.prog_id, req.body.area_id, req.body.report_type, req.body.severity,
-        req.body.problem_summary, reproducible, req.body.problem, req.body.suggested_fix,
-        req.body.reported_by, req.body.date, req.body.assigned_to, req.body.comments,
-        req.body.status, req.body.priority, req.body.resolution, req.body.resolution_version,
-        req.body.resolved_by, req.body.resolved_date, req.body.tested_by, req.body.tested_date, req.body.treat_as], function (err, result) {
+    else {
+         sqlParams.splice(4, 0, reproducible);
+    }
+    console.log(req.body);
+    console.log(sqlParams);
+    connection.query(sql, sqlParams, function (err, result) {
         if (err) {
             throw err;
         } else {
