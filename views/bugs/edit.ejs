@@ -249,9 +249,7 @@
                 <label for="file">Attachments</label>
                 <select class="custom-select mr-sm-2" id="file" name="file">
                     <%
-                    let fileName = "";
                     files.forEach(function(file) {
-                    fileName = file.filename;
                     %>
 
                         <option value="<%= file.filename %>"><%= file.filename %></option>
