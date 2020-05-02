@@ -111,7 +111,7 @@
             <div class="form-group col-md-9">
                 <label for="suggested_fix">Suggested Fix</label>
                 <textarea class="form-control" id="suggested_fix" name="suggested_fix" rows="5"
-                          required><%= bug.suggested_fix %></textarea>
+                          ><%= bug.suggested_fix %></textarea>
             </div>
         </div>
         <div class="form-row">
@@ -243,12 +243,16 @@
         </div>
     </form>
     <hr>
-    <form id="attfile" action="/bugs/file" method="get">
+
         <div class="form-row">
             <div class="form-group col-sm-9">
                 <label for="file">Attachments</label>
                 <select class="custom-select mr-sm-2" id="file" name="file">
-                    <% files.forEach(function(file) { %>
+                    <%
+                    let fileName = "";
+                    files.forEach(function(file) {
+                    fileName = file.filename;
+                    %>
 
                         <option value="<%= file.filename %>"><%= file.filename %></option>
 
@@ -258,10 +262,10 @@
         </div>
          <div class="form-group row">
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Open</button>
+                <a href="/uploadfiles/<%=fileName%>" target="_blank" class="btn btn-primary">Open</a>
             </div>
         </div>
-    </form>
+
     <hr>
     <form action="/bugs/upload/<%= bug.bug_id %>" method="POST" encType="multipart/form-data">
         <div class="form-row">
