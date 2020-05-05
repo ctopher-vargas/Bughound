@@ -10,11 +10,11 @@
     	<form action="/bugs" method="POST" id="bugForm">
 			<div class="form-row">	
     			<div class="form-group col-md-3">
-    				<label for="prog_id">Program</label>
+    				<label for="prog_id">Program: Version, Release</label>
     				<select class="custom-select mr-sm-2" id="prog_id" name="prog_id" onchange="dynamicForm(this);" required>
     					<option value="">--</option>
     					 <% programs.forEach(function(programs) { %>
-    					 	<option value="<%=programs.prog_id%>"><%=programs.program%> : #<%=programs.prog_id%></option>
+    					 	<option value="<%=programs.prog_id%>"><%=programs.program%> : <%=programs.program_version%> , <%=programs.program_release%></option>
     					 <% }); %>
     				</select>
     			</div>
@@ -73,9 +73,9 @@
 					<input type="date" class="form-control" id="date" name="date" required>
 				</div>
 			</div>    		
-    		<hr>
+    		
     		<!-- items below are optional -->
-			<div class="form-row">
+			<div class="form-row" style="display: none;">
 				<div class="form-group col-md-3">
 					<label for="area_id">Functional Area</label>
 					<select class="custom-select mr-sm-2"  id="area_id" name="area_id">
@@ -92,13 +92,13 @@
 					</select>
 				</div>
 			</div>		
-			<div class="form-row">
+			<div class="form-row" style="display: none;">
 				<div class="form-group col-md-9">
 					<label for="comments">Comments</label>
 					<textarea class="form-control" id="comments" name="comments" rows="5"></textarea>
 				</div>
 			</div> 		
-			<div class="form-row">
+			<div class="form-row" style="display: none;">
 				<div class="form-group col-md-3">
 					<label for="status">Status</label>
 					<select class="custom-select mr-sm-2" id="status" name="status">
@@ -118,7 +118,7 @@
 					</select>
 				</div>			
 			</div>
-			<div class="form-row">
+			<div class="form-row" style="display: none;">
 				<div class="form-group col-md-3">
 					<label for="resolution">Resolution</label>
 					<select class="custom-select mr-sm-2" id="resolution" name="resolution">
@@ -141,7 +141,7 @@
 					</select>
 				</div>
 			</div>  		
-			<div class="form-row">
+			<div class="form-row" style="display: none;">
 				<div class="form-group col-md-3">
 					<label for="resolved_by">Resolved By</label>
 					<select class="custom-select mr-sm-2" id="resolved_by" name="resolved_by">
@@ -156,7 +156,7 @@
 					<input type="date" class="form-control" id="resolved_date" name="resolved_date">
 				</div>
 			</div>
-			<div class="form-row">
+			<div class="form-row" style="display: none;">
 				<div class="form-group col-md-3">
 					<label for="tested_by">Tested By</label>
 					<select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
@@ -171,7 +171,7 @@
 					<input type="date" class="form-control" id="tested_date" name="tested_date">
 				</div>
 			</div>
-    		<div class="form-row">
+    		<div class="form-row" style="display: none;">
     			<div class="form-group col-md-3">
 					<label for="">Treat As?</label>
 					<select class="custom-select mr-sm-2" id="treat_as" name="treat_as">

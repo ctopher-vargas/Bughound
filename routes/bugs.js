@@ -21,7 +21,7 @@ router.get('/', middleWare.isLoggedIn, function (req, res, next) {
 });
 
 router.get('/new', middleWare.isLoggedIn, function (req, res, next) {
-    connection.query("SELECT prog_id, program, program_version FROM programs;", function (err, programs) {
+    connection.query("SELECT * FROM programs;", function (err, programs) {
         if (err) {
             throw err;
         } else {
@@ -79,8 +79,6 @@ router.post('/', middleWare.isLoggedIn, function (req, res, next) {
     }else{
         sqlParams.splice(4, 0, reproducible);
     }
-
-    console.log(req.body);
     console.log(sqlParams);
     connection.query(sql, sqlParams, function (err, result) {
         if (err) {
@@ -184,7 +182,6 @@ router.put('/edit/:bug_id', middleWare.isLoggedIn2up, function (req, res, next) 
 
     sqlParams.push(req.params.bug_id);
 
-    console.log(req.body);
     console.log(sqlParams);
 
     connection.query(sql, sqlParams, function (err, result) {
@@ -203,7 +200,7 @@ router.put('/edit/:bug_id', middleWare.isLoggedIn2up, function (req, res, next) 
 
 router.get('/search', middleWare.isLoggedIn2up, function (req, res, next) {
 
-    connection.query("SELECT prog_id, program FROM programs;", function (err, programs) {
+    connection.query("SELECT * FROM programs;", function (err, programs) {
         if (err) {
             throw err;
         } else {
@@ -256,7 +253,9 @@ router.get('/delete', function (req, res, next) {
 
 router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn2up, function (req, res) {
     if (!req.files || Object.keys(req.files).length === 0) {
-        return res.status(400).send('No files were uploaded.');
+        var id = req.params.bug_id; 
+        req.flash("error", "No files were uploaded"); 
+        res.redirect('/bugs/edit/'+req.params.bug_id);
     }
 
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
@@ -273,6 +272,7 @@ router.post('/upload/:bug_id', fileUpload(), middleWare.isLoggedIn2up, function 
                     throw err;
                 } else {
                     console.log(result);
+                    req.flash("success", "File successfully updated"); 
                     res.redirect('/bugs/edit/'+req.params.bug_id);
                 }
 
@@ -317,9 +317,9 @@ function constructSearchQuery(s) {
     }
 
     if (sqlParams.length === 0)
-        sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
+        sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id, programs.program_version, programs.program_release FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id;";
     else {
-        sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
+        sql = "SELECT bugs.bug_id, bugs.problem_summary, programs.program, programs.prog_id, programs.program_version, programs.program_release FROM bugs INNER JOIN programs ON bugs.prog_id = programs.prog_id WHERE" + sql
         sql = sql.substring(0, sql.length - 3);
 
     }

@@ -237,7 +237,7 @@
         <div class="form-group row">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-success">Save</button>
-                <a class="btn btn-danger" onclick="goBack()" role="button">Cancel</a>
+                <a class="btn btn-danger" href="/bugs/search" role="button">Cancel</a>
             </div>
         </div>
     </form>
@@ -245,21 +245,18 @@
 
         <div class="form-row">
             <div class="form-group col-sm-9">
-                <label for="file">Attachments</label>
-                <select class="custom-select mr-sm-2" id="file" name="file">
-                    <%
-                    files.forEach(function(file) {
-                    %>
-
+                <label for="file" id="attachment_txt">Attachments</label>
+                <select class="custom-select mr-sm-2" id="file" name="file" onchange="resetHref()">
+                    <option value="-1">--</option>
+                    <% files.forEach(function(file) { %>
                         <option value="<%= file.filename %>"><%= file.filename %></option>
-
                     <% }); %>
                 </select>
             </div>
         </div>
          <div class="form-group row">
             <div class="col-sm-10">
-                <a id="fileLink" onclick="setHref()" href="#" target="_blank" class="btn btn-primary">Open</a>
+                <a id="fileLink" onclick="setHref()" class="btn btn-primary">Open</a>
             </div>
         </div>
 
@@ -272,7 +269,7 @@
             </div>
         </div>
         <br>
-         <div class="form-group row">
+        <div class="form-group row">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Save Attachment</button>
             </div>
@@ -290,15 +287,22 @@
 
     function setHref() {
 
-       let fileLink = document.getElementById("fileLink");
-       let fileSelected = document.getElementById("file");
-       let f = fileSelected.options[fileSelected.selectedIndex].value;
-       fileLink.setAttribute("href", "/uploadfiles/" + f);
+        let fileLink = document.getElementById("fileLink");
+        let fileSelected = document.getElementById("file");
+        let f = fileSelected.options[fileSelected.selectedIndex].value;
+        if(f == -1) {
+            document.getElementById("attachment_txt").innerHTML = "Attachments : there are no attachments selected";
+        } else {
+            fileLink.setAttribute("href", "/uploadfiles/" + f);
+            fileLink.setAttribute("target", "_blank");
+        }
+    }
 
-  }
-
-
-
+    function resetHref() {
+        document.getElementById("attachment_txt").innerHTML = "Attachments";
+        document.getElementById("fileLink").removeAttribute("href"); 
+        document.getElementById("fileLink").removeAtrribute("target"); 
+    }
 
 </script>
 

@@ -9,7 +9,7 @@
           <thead class="thead-dark">
             <tr>
                 <th>Bug Id</th>
-                <th>Program</th>
+                <th>Program : Version, Release</th>
                 <th>Summary</th>
             </tr>
             </thead>
@@ -18,13 +18,13 @@
                     <tr>
 
                         <td><a href="/bugs/edit/<%= bug.bug_id %>"><%= bug.bug_id %></a></td>
-                        <td><%= bug.program %></td>
+                        <td><%= bug.program %> : <%=bug.program_version%>, <%=bug.program_release%></td>
                         <td><%= bug.problem_summary %></td>
                     </tr>
                 <% }); %>        
             </tbody>
         </table>
-        <a class="btn btn-danger" onclick="goBack()" role="button">Cancel</a>
+        <a class="btn btn-danger" href="/bugs/search" role="button">Cancel</a>
     </div>
 
 <% include ../partials/footer %>
