@@ -4,12 +4,6 @@ var connection = require('../db');
 var passport = require('passport');
 var middleWare = require('../middleware/index.js'); 
 
-<<<<<<< HEAD
-
-/* GET home page. */
-=======
-///landing page
->>>>>>> final_edits
 router.get('/', function(req, res, next) {
 	res.render('landing');
 });
