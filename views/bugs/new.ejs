@@ -1,0 +1,238 @@
+  
+<% include ../partials/head %> 
+
+  	<div class="container">
+         <div class="jumbotron shadow">
+            <h1>New Bug</h1>      
+        </div>
+    </div>
+    <div class="container content_body">
+    	<form action="/bugs" method="POST" id="bugForm">
+			<div class="form-row">	
+    			<div class="form-group col-md-3">
+    				<label for="prog_id">Program: Version, Release</label>
+    				<select class="custom-select mr-sm-2" id="prog_id" name="prog_id" onchange="dynamicForm(this);" required>
+    					<option value="">--</option>
+    					 <% programs.forEach(function(programs) { %>
+    					 	<option value="<%=programs.prog_id%>"><%=programs.program%> : <%=programs.program_version%> , <%=programs.program_release%></option>
+    					 <% }); %>
+    				</select>
+    			</div>
+				<div class="form-group col-md-3">
+					<label for="report_type">Report Type</label>
+					<select class="custom-select mr-sm-2" id="report_type" name="report_type" required>
+						<option value="">--</option>
+						<option value="1">Coding Error</option>
+						<option value="2">Design Issue</option>
+						<option value="3">Suggestion</option>
+						<option value="4">Documentation</option>
+						<option value="5">Hardware</option>
+						<option value="6">Query</option>
+					</select>
+				</div>
+		    	<div class="form-group col-md-3">
+					<label for="severity">Severity</label> 
+					<select class="custom-select mr-sm-2" id="severity" name="severity" required>
+						<option value="">--</option>
+						<option value="1">Minor</option>
+						<option value="3">Serious</option>
+						<option value="3">Fatal</option>
+					</select>
+				</div>
+			</div>		
+			<div class="form-row">
+				<div class="form-group col-md-9">
+    				<label for="problem_summary">Problem Summary</label>
+    				<input type="text" class="form-control" id="problem_summary" name="problem_summary" required>
+    			</div>
+    		</div>	
+    		<div class="form-row">
+    			<div class="form-group col-md-3" style="padding-left: 25px">
+    				<input type="checkbox" class="form-check-input" id="reproducible" name="reproducible" value="1">
+    				<label for="reproducible" class="form-check-label">Reproducible</label>
+    			</div>
+    		</div>			
+			<div class="form-row">
+				<div class="form-group col-md-9">
+					<label for="problem">Problem</label>
+					<textarea class="form-control" id="problem" name="problem" rows="5" required></textarea>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-md-3">
+					<label for="reported_by">Reported By</label>
+					<select class="custom-select mr-sm-2" id="reported_by" name="reported_by" required>
+						<option value="">--</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					 <% }); %>
+    				</select>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="date">Date</label>
+					<input type="date" class="form-control" id="date" name="date" required>
+				</div>
+			</div>    		
+    		
+    		<!-- items below are optional -->
+			<div class="form-row" style="display: none;">
+				<div class="form-group col-md-3">
+					<label for="area_id">Functional Area</label>
+					<select class="custom-select mr-sm-2"  id="area_id" name="area_id">
+						<option value="">--</option>
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="assigned_to">Assigned To</label>
+					<select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
+						<option value="">--</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					<% }); %>
+					</select>
+				</div>
+			</div>		
+			<div class="form-row" style="display: none;">
+				<div class="form-group col-md-9">
+					<label for="comments">Comments</label>
+					<textarea class="form-control" id="comments" name="comments" rows="5"></textarea>
+				</div>
+			</div> 		
+			<div class="form-row" style="display: none;">
+				<div class="form-group col-md-3">
+					<label for="status">Status</label>
+					<select class="custom-select mr-sm-2" id="status" name="status">
+						<option value="1">open</option>
+						<option value="2">closed</option>
+					</select>
+				</div>			
+				<div class="form-group col-md-3">
+					<label for="priority">Priority</label>
+					<select class="custom-select mr-sm-2" id="priority" name="priority">
+						<option value="">--</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				</div>			
+			</div>
+			<div class="form-row" style="display: none;">
+				<div class="form-group col-md-3">
+					<label for="resolution">Resolution</label>
+					<select class="custom-select mr-sm-2" id="resolution" name="resolution">
+						<option value="">--</option>
+						<option value="1">pending</option>
+						<option value="2">fixed</option>
+						<option value="3">irresproducible</option>
+						<option value="4">deferred</option>
+						<option value="5">as designed</option>
+						<option value="6">can't be fixed</option>
+						<option value="7">withdrawn by reporter</option>
+						<option value="8">need more info</option>
+						<option value="9">disagree with suggestion</option>
+					</select>
+				</div>			
+				<div class="form-group col-md-3">
+					<label for="resolution_version">Resolution Version</label>
+					<select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
+						<option value="">--</option>
+					</select>
+				</div>
+			</div>  		
+			<div class="form-row" style="display: none;">
+				<div class="form-group col-md-3">
+					<label for="resolved_by">Resolved By</label>
+					<select class="custom-select mr-sm-2" id="resolved_by" name="resolved_by">
+						<option value="">--</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					<% }); %>
+					</select>
+				</div>
+				<div class="form-group col-md-3">
+					<label for="resolved_date">Date Resolved</label>
+					<input type="date" class="form-control" id="resolved_date" name="resolved_date">
+				</div>
+			</div>
+			<div class="form-row" style="display: none;">
+				<div class="form-group col-md-3">
+					<label for="tested_by">Tested By</label>
+					<select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
+						<<option value="">--</option>
+						<% users.forEach(function(users) { %>
+    					 	<option value="<%=users.emp_id%>"><%=users.username%></option>
+    					<% }); %>
+					</select>
+				</div>		
+				<div class="form-group col-md-3">
+					<label for="tested_date">Date Tested</label>
+					<input type="date" class="form-control" id="tested_date" name="tested_date">
+				</div>
+			</div>
+    		<div class="form-row" style="display: none;">
+    			<div class="form-group col-md-3">
+					<label for="">Treat As?</label>
+					<select class="custom-select mr-sm-2" id="treat_as" name="treat_as">
+						<option value="1">Yes</option>
+						<option value="2">No</option>
+					</select>
+				</div>
+    		</div>
+    		<div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <a class="btn btn btn-primary clearLink" role="button" onclick="clearForm()">Reset</a>
+                    <a class="btn btn-danger" href="/home" role="button">Cancel</a>
+                </div>
+            </div>
+    	</form>
+    </div>
+   
+   <script type="text/javascript">
+   		function dynamicForm(element) {
+   			// clear previous area field and resolution field
+   			clearAreaResolution(); 
+			//adding areas specific to program
+			var progid = element.options[element.selectedIndex].value; 
+			var count = 1; 
+			<% areas.forEach(function(areas) { %>
+				if(<%=areas.prog_id%> == progid) {
+					document.getElementById("area_id").options[count] = new Option('<%=areas.area%>', <%=areas.area_id%>); 
+					count++;
+				}
+			<% }); %>
+			//adding resolution version specific to program
+			var prog_name = element.options[element.selectedIndex].text;
+			var res_version = [];  
+			<% programs.forEach(function(programs){ %>
+				//make sure program names match
+				if('<%=programs.program%>' == prog_name) {
+					//makes sure not to add duplicate versions
+					if(!res_version.includes(<%=programs.program_version%>)) {
+						res_version.push(<%=programs.program_version%>);
+					}		
+				}	
+			<% }); %>
+			//sort versions
+			res_version.sort(); 
+			count = 1; 
+			res_version.forEach(function(version){
+				document.getElementById("resolution_version").options[count] = new Option(version, version); 
+				count++; 
+			});
+		}
+		function clearAreaResolution(){
+			document.getElementById("area_id").options.length = 0;
+			document.getElementById("area_id").options[0] = new Option('--', ''); 
+			document.getElementById("resolution_version").options.length = 0;
+			document.getElementById("resolution_version").options[0] = new Option('--', '');
+		}
+		function clearForm() {
+			document.getElementById("bugForm").reset(); 
+			clearAreaResolution(); 
+		}
+   </script>
+    
+<% include ../partials/footer %>

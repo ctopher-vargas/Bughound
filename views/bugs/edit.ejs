@@ -1,0 +1,309 @@
+<% include ../partials/head %>
+
+<div class="container">
+    <div class="jumbotron shadow">
+        <h1>Edit Bug ID #<%= bug.bug_id%></h1>
+        <p>Program Name: <%=program%> - #<%=bug.prog_id%></p>
+    </div>
+</div>
+<div class="container content_body">
+    <form action="/bugs/edit/<%= bug.bug_id %>?_method=PUT" method="POST">
+        <input type="hidden" id="prog_id" name="prog_id" value="<%= bug.prog_id %>">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="report_type">Report Type</label>
+                <select class="custom-select mr-sm-2" id="report_type" name="report_type" required>
+
+                    <%
+                    var report_tyes = ["Coding Error", "Design Issue", "Suggestion", "Documentation", "Hardware", "Query"];
+                    for (let i = 0; i < report_tyes.length; i++ )
+                    {
+                        var selected = (bug.report_type == i + 1) ? "selected" : "";
+                    %>
+                    <option value="<%= i + 1 %>" <%= selected %>><%= report_tyes[i] %></option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="severity">Severity</label>
+                <select class="custom-select mr-sm-2" id="severity" name="severity" required>
+
+                    <%
+                    var severity = ["Minor", "Serious", "Fatal"];
+                    for (let i = 0; i < severity.length; i++ )
+                    {
+                        selected = (bug.severity == i + 1) ? "selected" : "";
+                    %>
+                    <option value="<%= i + 1 %>" <%= selected %>><%= severity[i] %></option>
+                    <%
+                    }
+                    %>
+
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="problem_summary">Problem Summary</label>
+                <input type="text" value="<%= bug.problem_summary %>" class="form-control" id="problem_summary"
+                       name="problem_summary" required>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3" style="padding-left: 25px">
+                <% var checked = (bug.reproducible == 1) ? "checked" : ""; %>
+                <input type="checkbox" class="form-check-input" id="reproducible" name="reproducible" <%=checked%>>
+
+                <label for="reproducible" class="form-check-label">Reproducible</label>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="problem">Problem</label>
+                <textarea class="form-control" id="problem" name="problem" rows="5"
+                          required><%= bug.problem %></textarea>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="reported_by">Reported By</label>
+                <select class="custom-select mr-sm-2" id="reported_by" name="reported_by" required>
+                    <% users.forEach(function(users) { %>
+                        <% selected = (users.emp_id == bug.reported_by) ? "selected" : ""; %>
+                        <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" value="<%= bug.date %>" id="date" name="date" required>
+            </div>
+        </div>
+        <hr>
+        <!-- items below are optional -->
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="area_id">Functional Area</label>
+                <select class="custom-select mr-sm-2" id="area_id" name="area_id">
+                    <option value="" selected>--</option>
+                    <% areas.forEach(function(areas) { %>
+                        <% selected = (bug.area_id == areas.area_id) ? "selected" : ""; %>
+                        <option value="<%= areas.area_id %>"<%= selected %>><%= areas.area %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="assigned_to">Assigned To</label>
+                <select class="custom-select mr-sm-2" id="assigned_to" name="assigned_to">
+                    <option value="">--</option>
+                    <% users.forEach(function(users) { %>
+                        <% selected = (users.emp_id == bug.assigned_to) ? "selected" : ""; %>
+                        <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="suggested_fix">Suggested Fix</label>
+                <textarea class="form-control" id="suggested_fix" name="suggested_fix" rows="5"><%= bug.suggested_fix %></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-9">
+                <label for="comments">Comments</label>
+                <textarea class="form-control" id="comments" name="comments" rows="5"><%= bug.comments %></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="status">Status</label>
+                <select class="custom-select mr-sm-2" id="status" name="status">
+                    <%
+                    var status = ["Open", "Closed"];
+                    for (let i = 0; i < status.length; i++ )
+                    {
+                        selected = (bug.status == i + 1) ? "selected" : "";
+                    %>
+                    <option value="<%= i + 1 %>" <%= selected %>><%= status[i] %></option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="priority">Priority</label>
+                <select class="custom-select mr-sm-2" id="priority" name="priority">
+                    <option value="" selected>--</option>
+                    <%
+                    var priority = [1, 2, 3, 4, 5];
+                    for (let i = 0; i < priority.length; i++ )
+                    {
+                        selected = (bug.priority == priority[i]) ? "selected" : "";
+                    %>
+                    <option value="<%= priority[i] %>" <%= selected %>><%= priority[i] %></option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="resolution">Resolution</label>
+                <select class="custom-select mr-sm-2" id="resolution" name="resolution">
+                    <option value="" selected>--</option>
+                    <%
+                    var resolutions = ["Pending", "Fixed", "Irresproducible", "Deferred", "As Designed", "Can't Be Fixed",
+                        "Withdrawn By Reporter", "Need More Info", "Disagree With Suggestion"];
+                    for (let i = 0; i < resolutions.length; i++ )
+                    {
+                        selected = (bug.resolution == i + 1) ? "selected" : "";
+                    %>
+                    <option value="<%= i + 1 %>" <%= selected %>><%= resolutions[i] %></option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="resolution_version">Resolution Version <%= bug.resolution_version %></label>
+                <select class="custom-select mr-sm-2" id="resolution_version" name="resolution_version">
+                    <option value="" selected>--</option>
+                    <% versions.forEach(function(version) { %>
+                        <% selected = (version.program_version == bug.resolution_version) ? "selected" : ""; %>
+                        <option value="<%= version.program_version %>"<%= selected %>><%= version.program_version %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="resolved_by">Resolved By</label>
+                <select class="custom-select mr-sm-2" id="resolved_by" name="resolved_by">
+                    <option value="">--</option>
+                    <% users.forEach(function(users) { %>
+                        <% selected = (users.emp_id == bug.resolved_by) ? "selected" : ""; %>
+                        <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="resolved_date">Resolved Date</label>
+                <input type="date" class="form-control" value="<%= bug.resolved_date %>" id="resolved_date"
+                       name="resolved_date">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="tested_by">Tested By</label>
+                <select class="custom-select mr-sm-2" id="tested_by" name="tested_by">
+
+                    <option value="" selected>--</option>
+                    <% users.forEach(function(users) { %>
+                        <% selected = (users.emp_id == bug.tested_by) ? "selected" : ""; %>
+                        <option value="<%= users.emp_id %>"<%= selected %>><%= users.username %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="tested_date">Tested Date</label>
+                <input type="date" class="form-control" value="<%= bug.tested_date %>" id="tested_date"
+                       name="tested_date">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="treat_as">Treat As?</label>
+                <select class="custom-select mr-sm-2" id="treat_as" name="treat_as">
+                    <option value="" selected>--</option>
+                    <%
+                    var options = ["Yes", "No"];
+                    for (let i = 0; i < options.length; i++ )
+                    {
+                        selected = (bug.treat_as == i + 1) ? "selected" : "";
+                    %>
+                    <option value="<%= i + 1 %>" <%= selected %>><%= options[i] %></option>
+                    <%
+                    }
+                    %>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-success">Save</button>
+                <a class="btn btn-danger" href="/bugs/search" role="button">Cancel</a>
+            </div>
+        </div>
+    </form>
+    <hr>
+
+        <div class="form-row">
+            <div class="form-group col-sm-9">
+                <label for="file" id="attachment_txt">Attachments</label>
+                <select class="custom-select mr-sm-2" id="file" name="file" onchange="resetHref()">
+                    <option value="-1">--</option>
+                    <% files.forEach(function(file) { %>
+                        <option value="<%= file.filename %>"><%= file.filename %></option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+         <div class="form-group row">
+            <div class="col-sm-10">
+                <a id="fileLink" onclick="setHref()" class="btn btn-primary">Open</a>
+            </div>
+        </div>
+
+    <hr>
+    <form action="/bugs/upload/<%= bug.bug_id %>" method="POST" encType="multipart/form-data">
+        <div class="form-row">
+            <div class="form-group custom-file col-md-9">
+                <input name="attach" type="file" class="custom-file-input" onchange="setFile()" id="attachment">
+                <label id="fileLabel" class="custom-file-label" for="attachment">Choose file</label>
+            </div>
+        </div>
+        <br>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Save Attachment</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    function setFile() {
+        let fileName = document.getElementById("attachment");
+        var fileLabel = document.getElementById("fileLabel");
+        fileLabel.textContent = fileName.value;
+    }
+
+    function setHref() {
+
+        let fileLink = document.getElementById("fileLink");
+        let fileSelected = document.getElementById("file");
+        let f = fileSelected.options[fileSelected.selectedIndex].value;
+        if(f == -1) {
+            document.getElementById("attachment_txt").innerHTML = "Attachments : there are no attachments selected";
+        } else {
+            fileLink.setAttribute("href", "/uploadfiles/" + f);
+            fileLink.setAttribute("target", "_blank");
+        }
+    }
+
+    function resetHref() {
+        document.getElementById("attachment_txt").innerHTML = "Attachments";
+        document.getElementById("fileLink").removeAttribute("href"); 
+        document.getElementById("fileLink").removeAtrribute("target"); 
+    }
+
+</script>
+
+<% include ../partials/footer %>

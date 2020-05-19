@@ -1,11 +1,20 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<% include ./partials/head %>
+
+<div class="container">
+  <div class="jumbotron shadow">
+    <h1>Welcome to <%=title%></h1>      
+    <% if(currentUser) { %>
+      <p>User: <%= currentUser.username%></p>
+      <p>Level: <%= currentUser.userlevel%></p>
+    <% } %>
+  </div>
+    <a class="btn btn-primary" href="/bugs/new" role="button"><i class="fas fa-bug"></i>  Enter New Bug</a>
+  <% if(currentUser && currentUser.userlevel > 1) { %>
+    <a class="btn btn-primary" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a>
+    <% } %>
+    <% if(currentUser && currentUser.userlevel == 3 ) { %>
+      <a class="btn btn-primary" href="/dbmaintenance" role="button"><i class="fas fa-database"></i>  Database Maintenance</a> 
+    <% } %>
+</div>
+
+<% include ./partials/footer %>

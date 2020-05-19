@@ -1,0 +1,29 @@
+<% include ../partials/head %>
+
+    <% include ../partials/search %>
+
+    <div class="container content_body">
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>Program Name</th>
+              <th>Release</th>
+              <th>Version</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% programs.forEach(function(program) { %>
+              <tr>
+                <td><a href="/programs/edit/<%=program.prog_id%>"><%=program.prog_id%></a></td>
+                <td><%=program.program%></td>
+                <td><%=program.program_release%></td>
+                <td><%=program.program_version%></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+        <a class="btn btn-danger" href="/dbmaintenance" role="button">Cancel</a>
+    </div>
+
+<% include ../partials/footer %>

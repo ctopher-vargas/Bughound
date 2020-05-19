@@ -1,0 +1,30 @@
+<% include ../partials/head %>
+
+    <div class="container content_body">
+        <div class="jumbotron shadow">
+            <h1>Bugs</h1>
+            <p>Your search results.</p>
+        </div>
+       <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr>
+                <th>Bug Id</th>
+                <th>Program : Version, Release</th>
+                <th>Summary</th>
+            </tr>
+            </thead>
+            <tbody>
+                <% bugs.forEach(function(bug) { %>
+                    <tr>
+
+                        <td><a href="/bugs/edit/<%= bug.bug_id %>"><%= bug.bug_id %></a></td>
+                        <td><%= bug.program %> : <%=bug.program_version%>, <%=bug.program_release%></td>
+                        <td><%= bug.problem_summary %></td>
+                    </tr>
+                <% }); %>        
+            </tbody>
+        </table>
+        <a class="btn btn-danger" href="/bugs/search" role="button">Cancel</a>
+    </div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,5 @@
+
+INSERT INTO `bugs` (`bug_id`, `prog_id`, `area_id`, `report_type`, `severity`, `problem_summary`, `reproducible`, `problem`, `suggested_fix`, `reported_by`, `date`, `assigned_to`, `comments`, `status`, `priority`, `resolution`, `resolution_version`, `resolved_by`, `resolved_date`, `tested_by`, `tested_date`, `treat_as`) VALUES
+(1001, 1001, 0, 4, 1, 'it isn\'t sorting in the right order ', 1, 'for some reason it isn\'t sorting properly in ascending order. it is sorting in descending order ', 'got to the function sort() and change inequality', 1000, '2020-04-16', 0, '', 1, 0, 0, '', 0, '0000-00-00', 0, '0000-00-00', 1);
+
+

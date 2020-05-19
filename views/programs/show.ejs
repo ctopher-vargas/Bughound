@@ -1,0 +1,43 @@
+<% include ../partials/head %>
+
+    <div class="container content_body">
+        <div class="jumbotron shadow">
+             <h1>Edit <%=program[0].program%></h1>
+        </div>
+        <div class="container">
+            <form action="/programs/<%=program[0].prog_id%>?_method=PUT" method="POST" >
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 col-form-label">Program Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="name" class="form-control" value="<%=program[0].program%>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="release" class="col-sm-2 col-form-label">Release</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="release" class="form-control" value="<%=program[0].program_release%>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="version" class="col-sm-2 col-form-label">Version</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="version" class="form-control" value="<%=program[0].program_version%>" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                        <a class="btn btn-primary" href="/programs/search" role="button">Cancel</a>
+                    </div>
+                </div>
+            </form>
+           <hr>
+            <div class="container">
+                <form action="/programs/<%=program[0].prog_id%>?_method=DELETE" method="POST">  
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+<% include ../partials/footer %>
