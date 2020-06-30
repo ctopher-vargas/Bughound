@@ -8,13 +8,15 @@
       <p>Level: <%= currentUser.userlevel%></p>
     <% } %>
   </div>
-    <a class="btn btn-primary" href="/bugs/new" role="button"><i class="fas fa-bug"></i>  Enter New Bug</a>
-  <% if(currentUser && currentUser.userlevel > 1) { %>
-    <a class="btn btn-primary" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a>
+  <div class="d-flex flex-column container content_body">
+    <a class="p-2 m-1 btn btn-dark" href="/bugs/new" role="button"><i class="fas fa-bug"></i>  Enter New Bug</a>
+    <% if(currentUser && currentUser.userlevel > 1) { %>
+      <a class="p-2 m-1 btn btn-dark" href="/bugs/search" role="button"><i class="fas fa-edit"></i>  Update Existing Bug</a>
     <% } %>
     <% if(currentUser && currentUser.userlevel == 3 ) { %>
-      <a class="btn btn-primary" href="/dbmaintenance" role="button"><i class="fas fa-database"></i>  Database Maintenance</a> 
+      <a class="p-2 m-1 btn btn-dark" href="/dbmaintenance" role="button"><i class="fas fa-database"></i>  Database Maintenance</a> 
     <% } %>
+  </div>
 </div>
 
 <% include ./partials/footer %>
